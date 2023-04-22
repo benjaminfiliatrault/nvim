@@ -50,9 +50,14 @@ return require('packer').startup(function(use)
 		}
 	}
 
+    use('godlygeek/tabular')
+    use('preservim/vim-markdown')
+
+
     use('terrortylor/nvim-comment')
 
     use('sbdchd/neoformat')
     use('vim-airline/vim-airline')
+    use('mfussenegger/nvim-dap')
 end)
 
