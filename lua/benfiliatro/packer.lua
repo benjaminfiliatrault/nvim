@@ -2,12 +2,6 @@
 
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
-vim.keymap.set("n", "<leader>vwm", function()
-    require("vim-with-me").StartVimWithMe()
-end)
-vim.keymap.set("n", "<leader>svwm", function()
-    require("vim-with-me").StopVimWithMe()
-end)
 
 
 return require('packer').startup(function(use)
@@ -63,6 +57,8 @@ return require('packer').startup(function(use)
 
 
     use('terrortylor/nvim-comment')
+
+
 
     use('sbdchd/neoformat')
     use('eslint/eslint')
