@@ -7,4 +7,5 @@ vim.filetype.add {
         ['Jenkinsfile'] = 'groovy',
         ['jenkinsfile'] = 'groovy',
     },
-}
+} 
+

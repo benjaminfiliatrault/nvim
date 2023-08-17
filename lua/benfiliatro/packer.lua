@@ -58,7 +58,12 @@ return require('packer').startup(function(use)
 
     use('terrortylor/nvim-comment')
 
-
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = {
+            {'nvim-tree/nvim-web-devicons'}
+        }
+    }
 
     use('sbdchd/neoformat')
     use('eslint/eslint')
