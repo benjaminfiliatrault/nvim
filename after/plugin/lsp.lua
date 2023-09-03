@@ -43,10 +43,10 @@ lsp.setup_nvim_cmp({
 lsp.set_preferences({
     suggest_lsp_servers = false,
     sign_icons = {
-        error = 'E',
-        warn = 'W',
-        hint = 'H',
-        info = 'I'
+        error = '⛔️',
+        warn = '⚠️',
+        hint = '?',
+        info = 'i'
     }
 })
 
@@ -78,6 +78,6 @@ vim.diagnostic.config({
   virtual_text = true,
   signs = true,
   underline = true,
-  update_in_insert = false,
-  severity_sort = false,
+  update_in_insert = true,
+  severity_sort = true,
 })
