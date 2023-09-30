@@ -21,6 +21,9 @@ lsp.configure('lua_ls', {
     }
 })
 
+-- Setup language servers.
+local lspconfig = require('lspconfig')
+lspconfig.tsserver.setup {}
 
 local cmp = require('cmp')
 local cmp_select = {behavior = cmp.SelectBehavior.Select}
