@@ -45,10 +45,15 @@ return require('packer').startup(function(use)
 		}
 	}
 
+
     use('godlygeek/tabular')
     use('preservim/vim-markdown')
-
-
+    use('jose-elias-alvarez/null-ls.nvim')
+    use('MunifTanjim/prettier.nvim')
+    use('tpope/vim-surround')
+    use('sbdchd/neoformat')
+    use('eslint/eslint')
+    use('vim-airline/vim-airline')
     use('terrortylor/nvim-comment')
 
     use {
@@ -57,10 +62,6 @@ return require('packer').startup(function(use)
             {'nvim-tree/nvim-web-devicons'}
         }
     }
-
-    use('sbdchd/neoformat')
-    use('eslint/eslint')
-    use('vim-airline/vim-airline')
 
     -- Debugger stuff
     use('mfussenegger/nvim-dap')
