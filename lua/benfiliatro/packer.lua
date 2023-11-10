@@ -1,4 +1,3 @@
-
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
@@ -9,16 +8,16 @@ return require('packer').startup(function(use)
 
 	use({
 		'nvim-telescope/telescope.nvim', tag = '0.1.4',
-		requires = { {'nvim-lua/plenary.nvim'} }
+		requires = { { 'nvim-lua/plenary.nvim' } }
 	})
 
 	use('rebelot/kanagawa.nvim')
 
-	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate'})
+	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 	use('theprimeagen/harpoon')
 	use('mbbill/undotree')
 	use('tpope/vim-fugitive')
-    use('junegunn/fzf')
+	use('junegunn/fzf')
 
 
 	use {
@@ -26,63 +25,57 @@ return require('packer').startup(function(use)
 		branch = 'v1.x',
 		requires = {
 			-- LSP Support
-			{'neovim/nvim-lspconfig'},             -- Required
-			{'williamboman/mason.nvim'},           -- Optional
-			{'williamboman/mason-lspconfig.nvim'}, -- Optional
+			{ 'neovim/nvim-lspconfig' }, -- Required
+			{ 'williamboman/mason.nvim' }, -- Optional
+			{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
 			-- Autocompletion
-			{'hrsh7th/nvim-cmp'},         -- Required
-			{'hrsh7th/cmp-nvim-lsp'},     -- Required
-			{'hrsh7th/cmp-buffer'},       -- Optional
-			{'hrsh7th/cmp-path'},         -- Optional
-			{'saadparwaiz1/cmp_luasnip'}, -- Optional
-			{'hrsh7th/cmp-nvim-lua'},     -- Optional
+			{ 'hrsh7th/nvim-cmp' }, -- Required
+			{ 'hrsh7th/cmp-nvim-lsp' }, -- Required
+			{ 'hrsh7th/cmp-buffer' }, -- Optional
+			{ 'hrsh7th/cmp-path' }, -- Optional
+			{ 'saadparwaiz1/cmp_luasnip' }, -- Optional
+			{ 'hrsh7th/cmp-nvim-lua' }, -- Optional
 
 			-- Snippets
-			{'L3MON4D3/LuaSnip'},             -- Required
-			{'rafamadriz/friendly-snippets'}, -- Optional
+			{ 'L3MON4D3/LuaSnip' }, -- Required
+			{ 'rafamadriz/friendly-snippets' }, -- Optional
 		}
 	}
 
-    -- To easily surround selected word with quotes & other stuff
-    use({
-        "kylechui/nvim-surround",
-        tag = "*", -- Use for stability; omit to use `main` branch for the latest features
-        config = function()
-            require("nvim-surround").setup({
-                -- Configuration here, or leave empty to use defaults
-            })
-        end
-    })
+	-- To easily surround selected word with quotes & other stuff
+	use({
+		"kylechui/nvim-surround",
+		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+		config = function()
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
+		end
+	})
 
-    -- Auto detect tab length
-    use('tpope/vim-sleuth')
+	-- Auto detect tab length
+	use('tpope/vim-sleuth')
 
-    -- Prettier recommended
-    use('sbdchd/neoformat')
-    -- Eslint official 
-    use('eslint/eslint')
+	-- Prettier recommended
+	use('sbdchd/neoformat')
+	-- Eslint official
+	use('eslint/eslint')
 
-    use('preservim/vim-markdown')
+	use('preservim/vim-markdown')
 
-    -- For that pretty Status bar at the bottom
-    use('vim-airline/vim-airline')
+	-- For that pretty Status bar at the bottom
+	use('vim-airline/vim-airline')
 
-    -- Improve comment writting
-    use('terrortylor/nvim-comment')
+	-- Improve comment writting
+	use('terrortylor/nvim-comment')
 
-    use {
-        'nvim-lualine/lualine.nvim',
-        requires = {
-            {'nvim-tree/nvim-web-devicons'}
-        }
-    }
+	use { 'nvim-lualine/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons' } }
 
-    -- Debugger stuff
-    use('mfussenegger/nvim-dap')
-    use('theHamsta/nvim-dap-virtual-text')
-    use { "rcarriga/nvim-dap-ui", requires = {"mfussenegger/nvim-dap"} }
-    use { "mxsdev/nvim-dap-vscode-js", requires = {"mfussenegger/nvim-dap"} }
+	-- Debugger stuff
+	use('mfussenegger/nvim-dap')
+	use('theHamsta/nvim-dap-virtual-text')
+	use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+	use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
 
 end)
-
