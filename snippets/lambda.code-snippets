@@ -1,0 +1,57 @@
+{
+	"Lambda Handler": {
+		"scope": "javascript,typescript",
+		"prefix": "lamb",
+		"body": [
+			"import type { APIGatewayEvent } from \"aws-lambda\";",
+			"import { exceptionResponse, successResponse } from \"@soltivo/backend\";",
+			"",
+			"",
+			"/** ${1} */",
+			"export const handler = async (event: APIGatewayEvent) => {",
+			"\ttry {",
+			"\t\t",
+			"\t\treturn successResponse(\"${2}\")",
+			"\t} catch (error) {",
+			"\t\treturn exceptionResponse(error, \"Error while ${3}\")",
+			"\t}",
+			"};"
+		],
+		"description": "Log output to console"
+	},
+	"Soltivo Error": {
+		"scope": "javascript,typescript",
+		"prefix": "SolErr",
+		"body": ["let error = new SoltivoError();", "error.code = \"${1}\";", "error.message = \"${2}\";", "error.statusCode = ${3};", "throw error;"]
+	},
+	"NotFoundError": {
+		"scope": "javascript,typescript",
+		"prefix": "NotFoundErr",
+		"body": ["let error = new SoltivoError();", "error.code = \"ResourceNotFoundException\";", "error.message = \"${2} not found.\";", "error.statusCode = 404;", "throw error;"]
+	},
+	"Controller": {
+		"scope": "javascript,typescript",
+		"prefix": "BodyControl",
+		"body": [
+			"export const $1Controller = (event: APIGatewayEvent) => {",
+			"\tconst parsedBody = JSON.parse(event.body)",
+			"\t",
+			"\tconst validationErrors = validate(parsedBody, {",
+			"\t\tproperties: {",
+			"\t\t\t$2",
+			"\t\t},",
+			"\t\tadditionalProperties: false,",
+			"\t}).errors;",
+			"\t",
+			"\tif (validationErrors.length > 0) validationException(validationErrors);",
+			"\t",
+			"\treturn",
+			"}"
+		]
+	},
+	"TestEvent": {
+		"scope": "javascript,typescript",
+		"prefix": "testEvent",
+		"body": ["const event = EVENT({", "\tbody: JSON.stringify({$1}),", "\theaders,", "\tauthorizer,", "})"]
+	}
+}

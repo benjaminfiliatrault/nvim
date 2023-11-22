@@ -11,18 +11,23 @@ return require('packer').startup(function(use)
 		requires = { { 'nvim-lua/plenary.nvim' } }
 	})
 
+	-- Theme
 	use('rebelot/kanagawa.nvim')
 
 	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-	use('theprimeagen/harpoon')
-	use('mbbill/undotree')
-	use('tpope/vim-fugitive')
-	use('junegunn/fzf')
 
+	-- You know what this is
+	use('theprimeagen/harpoon')
+	-- Git tree visualizer
+	use('mbbill/undotree')
+	-- Git plugin
+	use('tpope/vim-fugitive')
+	-- Fuzzy Finder
+	use('junegunn/fzf')
 
 	use {
 		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v1.x',
+		branch = 'v3.x',
 		requires = {
 			-- LSP Support
 			{ 'neovim/nvim-lspconfig' }, -- Required
