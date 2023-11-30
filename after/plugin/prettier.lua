@@ -1,5 +1,6 @@
 local ext_to_lang = {
   js = "javascript",
+  json = "javascript",
   jsx = "javascript",
   ts = "typescript",
   tsx = "typescript",
