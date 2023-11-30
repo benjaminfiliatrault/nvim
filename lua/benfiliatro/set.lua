@@ -28,3 +28,5 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
+vim.opt.cursorcolumn = true;
+vim.opt.cursorline = true;
