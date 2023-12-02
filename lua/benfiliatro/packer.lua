@@ -16,6 +16,9 @@ return require('packer').startup(function(use)
 
 	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 
+	-- Rust tooling
+	use('simrat39/rust-tools.nvim')
+
 	-- You know what this is
 	use('theprimeagen/harpoon')
 	-- Git tree visualizer
@@ -33,6 +36,7 @@ return require('packer').startup(function(use)
 			{ 'neovim/nvim-lspconfig' }, -- Required
 			{ 'williamboman/mason.nvim' }, -- Optional
 			{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
+			{ 'nvim-lua/lsp-status.nvim' },
 
 			-- Autocompletion
 			{ 'hrsh7th/nvim-cmp' }, -- Required

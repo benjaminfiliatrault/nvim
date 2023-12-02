@@ -37,6 +37,14 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/benfiliatro/packer.lua<CR>")
 
+vim.keymap.set("i", "\"", "\"\"<Left>")
+vim.keymap.set("i", "'", "''<Left>")
+vim.keymap.set("i", "(", "()<Left>")
+vim.keymap.set("i", "[", "[]<Left>")
+vim.keymap.set("i", "{", "{}<Left>")
+vim.keymap.set("i", "{<CR>", "{<CR>}<ESC>O")
+vim.keymap.set("i", "{;<CR>", "{<CR>};<ESC>O")
+
 -- Debugger Mapping
 vim.keymap.set("n", "<leader>dt", ":DapUiToggle<CR>", { noremap=true })
 vim.keymap.set("n", "<leader>db", ":DapToggleBreakpoint<CR>", { noremap=true })
