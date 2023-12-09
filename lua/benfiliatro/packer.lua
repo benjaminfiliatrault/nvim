@@ -19,6 +19,9 @@ return require('packer').startup(function(use)
 	-- Rust tooling
 	use('simrat39/rust-tools.nvim')
 
+	-- Auto closing brackets
+	use('m4xshen/autoclose.nvim')
+
 	-- You know what this is
 	use('theprimeagen/harpoon')
 	-- Git tree visualizer

@@ -8,7 +8,9 @@ local luasnip = require("luasnip")
 lsp.preset("recommended")
 
 local cmp_action = require('lsp-zero').cmp_action()
+
 require('luasnip.loaders.from_vscode').lazy_load()
+require("autoclose").setup()
 
 -- Set completeopt to have a better completion experience
 -- :help completeopt
@@ -168,7 +170,11 @@ local rust_tools_rust_server = {
 		-- https://github.com/simrat39/rust-tools.nvim/wiki/Server-Configuration-Schema
 		["rust-analyzer"] = {
 			cargo = {
-				autoReload = true
+				autoReload = true,
+			},
+			diagnostics = {
+				-- Bug in Rust Analyzer, waiting for a fix
+				disabled = {"unresolved-proc-macro"}
 			}
 		},
 	},
