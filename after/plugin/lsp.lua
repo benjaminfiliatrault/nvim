@@ -40,6 +40,7 @@ mason_lspconfig.setup({
 		'html',
 		'cssls',
 		'jsonls',
+		'yamlls',
 	}
 })
 

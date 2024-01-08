@@ -19,6 +19,14 @@ return require('packer').startup(function(use)
 	-- Rust tooling
 	use('simrat39/rust-tools.nvim')
 
+	use({
+		"andythigpen/nvim-coverage",
+		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("coverage").setup()
+		end,
+	})
+
 	-- Auto closing brackets
 	use('m4xshen/autoclose.nvim')
 
