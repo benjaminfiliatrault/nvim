@@ -10,6 +10,12 @@ lsp.preset("recommended")
 local cmp_action = require('lsp-zero').cmp_action()
 
 require('luasnip.loaders.from_vscode').lazy_load()
+require("luasnip.loaders.from_snipmate").lazy_load()
+require('luasnip').filetype_extend("javascript", { "javascriptreact" })
+require('luasnip').filetype_extend("typescript", { "javascriptreact" })
+require('luasnip').filetype_extend("javascript", { "html" })
+require('luasnip').filetype_extend("typescript", { "html" })
+
 require("autoclose").setup()
 
 -- Set completeopt to have a better completion experience
@@ -17,7 +23,7 @@ require("autoclose").setup()
 -- menuone: popup even when there's only one match
 -- noinsert: Do not insert text until a selection is made
 -- noselect: Do not auto-select, nvim-cmp plugin will handle this for us.
-vim.o.completeopt = "menuone,noinsert,noselect"
+vim.opt.completeopt = "noinsert,menuone,noselect"
 
 -- Avoid showing extra messages when using completion
 vim.opt.shortmess:append({ c = true })
@@ -45,22 +51,29 @@ mason_lspconfig.setup({
 })
 
 
--- Setup Completion
--- See https://github.com/hrsh7th/nvim-cmp#basic-configuration
-local has_words_before = function()
-	unpack = unpack or table.unpack
-	local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-	return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
 cmp.setup({
+	enabled = function()
+      -- disable completion in comments
+      local context = require 'cmp.config.context'
+      -- keep command mode completion enabled when cursor is in a comment
+      if vim.api.nvim_get_mode().mode == 'c' then
+        return true
+      else
+        return not context.in_treesitter_capture("comment")
+          and not context.in_syntax_group("Comment")
+      end
+    end,
 	snippet = {
 		expand = function(args)
 			luasnip.lsp_expand(args.body)
 		end,
 	},
 	mapping = cmp.mapping.preset.insert({
-		['<C-Space>'] = cmp.mapping.complete(),
+		["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
+
+		["<C-k>"] = cmp.mapping.select_prev_item(), -- previous suggestion
+		["<C-j>"] = cmp.mapping.select_next_item(), -- next suggestion
+
 		['<C-p>'] = cmp_action.luasnip_jump_forward(),
 		['<C-n>'] = cmp_action.luasnip_jump_backward(),
 		['<C-y>'] = cmp.mapping.confirm({ select = false }),
@@ -72,13 +85,21 @@ cmp.setup({
 	}),
 	-- Installed sources
 	sources = {
-		{ name = "nvim_lsp" },
+		{ name = "nvim_lsp", max_item_count = 8, keyword_length = 2 },
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lsp_document_symbol" },
 		{ name = "luasnip" },
 		{ name = "path" },
-		{ name = "buffer" },
+		{ name = "buffer", keyword_length = 3 },
 		{ name = "crates" },
+		{ name = 'scss',
+			option = {
+				triggers = { "$" }, -- default value
+            	extension = ".scss", -- default value
+            	pattern = [=[\%(\s\|^\)\zs\$[[:alnum:]_\-0-9]*:\?]=], -- default value
+				folders = { "node_modules/@soltivo/draw-a-line/core/assets/styles" }
+			}
+		}
 	},
 })
 
@@ -143,8 +164,8 @@ local function on_attach(client, buffer)
 	})
 
 	-- Goto previous/next diagnostic warning/error
-	keymap.set("n", "]d", vim.diagnostic.goto_next, keymap_opts)
-	keymap.set("n", "[d", vim.diagnostic.goto_prev, keymap_opts)
+	keymap.set("n", "nd", vim.diagnostic.goto_next, keymap_opts)
+	keymap.set("n", "nd", vim.diagnostic.goto_prev, keymap_opts)
 
 	-- on_attach(client)
 	lsp_status.on_attach(client)

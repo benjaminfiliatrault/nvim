@@ -40,6 +40,11 @@ return require('packer').startup(function(use)
 	use('junegunn/fzf')
 
 	use {
+		"folke/todo-comments.nvim",
+		requires = { "nvim-lua/plenary.nvim" },
+	}
+
+	use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v3.x',
 		requires = {
@@ -56,6 +61,7 @@ return require('packer').startup(function(use)
 			{ 'hrsh7th/cmp-path' }, -- Optional
 			{ 'saadparwaiz1/cmp_luasnip' }, -- Optional
 			{ 'hrsh7th/cmp-nvim-lua' }, -- Optional
+			{ 'mmolhoek/cmp-scss' },
 
 			-- Snippets
 			{ 'L3MON4D3/LuaSnip' }, -- Required
