@@ -175,7 +175,7 @@ local rust_tools_rust_server = {
 			},
 			diagnostics = {
 				-- Bug in Rust Analyzer, waiting for a fix
-				disabled = {"unresolved-proc-macro"}
+				disabled = { "unresolved-proc-macro" }
 			}
 		},
 	},
