@@ -36,6 +36,8 @@ return require('packer').startup(function(use)
 	use('mbbill/undotree')
 	-- Git plugin
 	use('tpope/vim-fugitive')
+	use('lewis6991/gitsigns.nvim')
+
 	-- Fuzzy Finder
 	use('junegunn/fzf')
 
