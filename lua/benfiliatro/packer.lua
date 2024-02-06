@@ -11,6 +11,8 @@ return require('packer').startup(function(use)
 		requires = { { 'nvim-lua/plenary.nvim' } }
 	})
 
+	use({ 'folke/neodev.nvim', opts = {} })
+
 	-- Theme
 	use('rebelot/kanagawa.nvim')
 

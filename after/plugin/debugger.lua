@@ -24,7 +24,6 @@ require("dap-vscode-js").setup({
         'node-terminal',
         'pwa-extensionHost',
         'node',
-        'chrome'
     },
     -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
     -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
@@ -34,6 +33,11 @@ require("dap-vscode-js").setup({
 
 local js_based_languages = { "typescript", "javascript", "typescriptreact" }
 
+local function find_node_pid()
+    local res = require('dap.utils').get_processes({ filter = "--inspect"})
+    return res.pid
+end
+
 for _, language in ipairs(js_based_languages) do
     require("dap").configurations[language] = {
         {
@@ -42,8 +46,8 @@ for _, language in ipairs(js_based_languages) do
             -- attach to an already running node process with --inspect flag
             -- default port: 9222
             request = "attach",
-            -- allows us to pick the process using a picker
-            processId = require 'dap.utils'.pick_process,
+            -- Node process id where node --inpect is used
+            processId = find_node_pid,
             -- name of the debug action
             name = "Attach debugger to existing `node --inspect` process",
             -- for compiled languages like TypeScript or Svelte.js
@@ -61,13 +65,19 @@ end
 
 -- DAPUI configurations
 dap.listeners.after.event_initialized["dapui_config"] = function()
-    dapui.open({})
+    dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
-    dapui.close({})
+    dapui.close()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-    dapui.close({})
+    dapui.close()
+end
+
+local function inspect_floating()
+    dapui.float_element('5')
 end
 
 vim.keymap.set('n', '<leader>ui', require 'dapui'.toggle)
+vim.keymap.set('n', '<leader>K', require 'dapui'.float_element)
+
