@@ -53,3 +53,8 @@ vim.keymap.set("n", "<leader>dc", ":DapContinue<CR>", { noremap=true })
 vim.keymap.set("n", "<leader>dr", ":lua require('dapui').open({reset=true})<CR>", { noremap=true })
 vim.keymap.set("n", "<leader>dq", ":lua require('dapui').close({reset=true})<CR>", { noremap=true })
 
+-- Best remaps ever so no arrows
+vim.api.nvim_set_keymap('n', '<left>', [[:echo "STOP IT. USE 'h'"<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<up>', [[:echo "STOP IT. USE 'j'"<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<down>', [[:echo "STOP IT. USE 'k'"<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<right>', [[:echo "STOP IT. USE 'l'"<CR>]], { noremap = true, silent = true })
