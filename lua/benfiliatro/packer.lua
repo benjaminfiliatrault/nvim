@@ -85,6 +85,8 @@ return require('packer').startup(function(use)
 		end
 	})
 
+	use('rhaiscript/vim-rhai')
+
 	-- Auto detect tab length
 	use('tpope/vim-sleuth')
 
