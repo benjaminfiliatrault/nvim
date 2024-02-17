@@ -39,6 +39,9 @@ return require('packer').startup(function(use)
 	-- Git plugin
 	use('tpope/vim-fugitive')
 	use('lewis6991/gitsigns.nvim')
+	use('rhysd/conflict-marker.vim')
+
+	use('github/copilot.vim')
 
 	-- Fuzzy Finder
 	use('junegunn/fzf')
@@ -92,8 +95,9 @@ return require('packer').startup(function(use)
 
 	-- Prettier recommended
 	use('sbdchd/neoformat')
+
 	-- Eslint official
-	use('eslint/eslint')
+	use('mfussenegger/nvim-lint')
 
 	use('preservim/vim-markdown')
 

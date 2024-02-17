@@ -16,9 +16,8 @@ local function format()
   local name = vim.api.nvim_buf_get_name(buf)
   local ext = name:match("%.(%w+)$")
   local lang = ext_to_lang[ext]
-  if lang then
-    local key = "neoformat_enabled_" .. lang
 
+  if lang then
     if lang == "javascript" or lang == "typescript" or lang == "css" then
       vim.g.neoformat_try_node_exe = 1
       vim.cmd("Neoformat prettier")

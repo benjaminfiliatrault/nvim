@@ -59,16 +59,17 @@ mason_lspconfig.setup({
 
 cmp.setup({
 	enabled = function()
-      -- disable completion in comments
-      local context = require 'cmp.config.context'
-      -- keep command mode completion enabled when cursor is in a comment
-      if vim.api.nvim_get_mode().mode == 'c' then
-        return true
-      else
-        return not context.in_treesitter_capture("comment")
-          and not context.in_syntax_group("Comment")
-      end
-    end,
+		vim.g.copilot_no_tab_map = true
+		-- disable completion in comments
+		local context = require 'cmp.config.context'
+		-- keep command mode completion enabled when cursor is in a comment
+		if vim.api.nvim_get_mode().mode == 'c' then
+			return true
+		else
+			return not context.in_treesitter_capture("comment")
+			and not context.in_syntax_group("Comment")
+		end
+	end,
 	snippet = {
 		expand = function(args)
 			luasnip.lsp_expand(args.body)
@@ -87,11 +88,25 @@ cmp.setup({
 		['<CR>'] = cmp.mapping.confirm({ select = true }),
 
 		-- tab complete
-		['<Tab>'] = cmp_action.tab_complete(),
+		['<Tab>'] = cmp.mapping(function(fallback)
+			local copilot_keys = vim.fn['copilot#Accept']()
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_jumpable() then
+				luasnip.expand_or_jump()
+			elseif copilot_keys ~= '' and type(copilot_keys) == 'string' then
+				vim.api.nvim_feedkeys(copilot_keys, 'i', true)
+			else
+				fallback()
+			end
+		end, {
+		'i',
+		's',
+	}),
 	}),
 	-- Installed sources
 	sources = {
-		{ name = "nvim_lsp", max_item_count = 8, keyword_length = 2 },
+		{ name = "nvim_lsp", max_item_count = 8, keyword_length = 3 },
 		{ name = "nvim_lsp_signature_help" },
 		{ name = "nvim_lsp_document_symbol" },
 		{ name = "luasnip" },
@@ -99,14 +114,14 @@ cmp.setup({
 		{ name = "buffer", keyword_length = 3 },
 		{ name = "crates" },
 		{ name = 'scss',
-			option = {
-				triggers = { "$" }, -- default value
-            	extension = ".scss", -- default value
-            	pattern = [=[\%(\s\|^\)\zs\$[[:alnum:]_\-0-9]*:\?]=], -- default value
-				folders = { "node_modules/@soltivo/draw-a-line/core/assets/styles" }
-			}
+		option = {
+			triggers = { "$" }, -- default value
+			extension = ".scss", -- default value
+			pattern = [=[\%(\s\|^\)\zs\$[[:alnum:]_\-0-9]*:\?]=], -- default value
+			folders = { "node_modules/@soltivo/draw-a-line/core/assets/styles" }
 		}
-	},
+	}
+},
 })
 
 lsp.set_sign_icons({
@@ -149,6 +164,7 @@ local function on_attach(client, buffer)
 	-- Code navigation and shortcuts
 	local opts = { buffer = buffer, remap = false }
 
+	-- LSP keybindings
 	keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
 	keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
 	keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
@@ -160,7 +176,7 @@ local function on_attach(client, buffer)
 	keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 	keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
-	-- Show diagnostic popup on cursor hover
+	-- Show diagnostic popup on cursor hover	
 	local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
 	vim.api.nvim_create_autocmd("CursorHold", {
 		callback = function()
@@ -169,9 +185,20 @@ local function on_attach(client, buffer)
 		group = diag_float_grp,
 	})
 
+	vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+		callback = function()
+			require("lint").try_lint()
+		end,
+	})
+
 	-- Goto previous/next diagnostic warning/error
 	keymap.set("n", "nd", vim.diagnostic.goto_next, keymap_opts)
 	keymap.set("n", "nd", vim.diagnostic.goto_prev, keymap_opts)
+
+	-- LSP signature help
+	vim.g.copilot_no_tab_map = true
+	vim.g.copilot_assume_mapped = true
+	vim.g.copilot_tab_fallback = ""
 
 	-- on_attach(client)
 	lsp_status.on_attach(client)
@@ -222,6 +249,9 @@ mason_lspconfig.setup_handlers({
 			capabilities = capabilities,
 			settings = {
 				Lua = {
+					workspace = {
+						checkThirdParty = false,
+					},
 					diagnostics = {
 						-- Get the language server to recognize the `vim` global
 						globals = { "vim" },

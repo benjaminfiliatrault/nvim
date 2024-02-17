@@ -1,4 +1,4 @@
-
+-- Set leader key
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
@@ -58,3 +58,5 @@ vim.api.nvim_set_keymap('n', '<left>', [[:echo "STOP IT. USE 'h'"<CR>]], { norem
 vim.api.nvim_set_keymap('n', '<up>', [[:echo "STOP IT. USE 'j'"<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<down>', [[:echo "STOP IT. USE 'k'"<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<right>', [[:echo "STOP IT. USE 'l'"<CR>]], { noremap = true, silent = true })
+
+
