@@ -176,19 +176,13 @@ local function on_attach(client, buffer)
 	keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 	keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
-	-- Show diagnostic popup on cursor hover	
+	-- Show diagnostic popup on cursor hover
 	local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
 	vim.api.nvim_create_autocmd("CursorHold", {
 		callback = function()
 			vim.diagnostic.open_float(nil, { focusable = false })
 		end,
 		group = diag_float_grp,
-	})
-
-	vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-		callback = function()
-			require("lint").try_lint()
-		end,
 	})
 
 	-- Goto previous/next diagnostic warning/error
