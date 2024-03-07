@@ -20,6 +20,7 @@ return require('packer').startup(function(use)
 
 	-- Rust tooling
 	use('simrat39/rust-tools.nvim')
+	use('rust-lang/rust.vim')
 
 	use({
 		"andythigpen/nvim-coverage",
