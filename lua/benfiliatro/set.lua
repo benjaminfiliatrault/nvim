@@ -30,3 +30,6 @@ vim.opt.updatetime = 50
 
 vim.opt.cursorcolumn = true;
 vim.opt.cursorline = true;
+
+-- disable that anoying foldenable
+vim.opt.foldenable = false
