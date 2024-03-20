@@ -113,12 +113,20 @@ return require('packer').startup(function(use)
 	-- All the Debugger stuff
 	use('mfussenegger/nvim-dap')
 	use('theHamsta/nvim-dap-virtual-text')
-	use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
-	use { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } }
-	use {
+
+	use({
+		"rcarriga/nvim-dap-ui",
+		requires = {
+			{ "mfussenegger/nvim-dap" },
+			{ "nvim-neotest/nvim-nio"}
+		}
+	})
+
+	use ( { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } } )
+	use({
 		"microsoft/vscode-js-debug",
 		opt = true,
 		run = "npm install && npx gulp vsDebugServerBundle && mv dist out"
-	}
+	} )
 
 end)
