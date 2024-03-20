@@ -33,3 +33,7 @@ vim.opt.cursorline = true;
 
 -- disable that anoying foldenable
 vim.opt.foldenable = false
+
+-- auto format rust files on save
+vim.g.rustfmt_autosave = 1
+
