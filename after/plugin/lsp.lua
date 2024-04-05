@@ -51,7 +51,7 @@ mason_lspconfig.setup({
 		'rust_analyzer',
 		'html',
 		'cssls',
-		'jsonls',
+		'biome',
 		'yamlls',
 	}
 })
@@ -175,6 +175,8 @@ local function on_attach(client, buffer)
 	keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
 	keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
 	keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+
+	keymap.set("n", "<C-g>", function () vim.lsp.buf.code_action() end, opts)
 
 	-- Show diagnostic popup on cursor hover
 	local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
