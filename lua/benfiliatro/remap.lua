@@ -37,15 +37,6 @@ vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/benfiliatro/packer.lua<CR>")
 
--- Comment the remap to auto closing 
--- vim.keymap.set("i", "\"", "\"\"<Left>")
--- vim.keymap.set("i", "'", "''<Left>")
--- vim.keymap.set("i", "(", "()<Left>")
--- vim.keymap.set("i", "[", "[]<Left>")
--- vim.keymap.set("i", "{", "{}<Left>")
--- vim.keymap.set("i", "{<CR>", "{<CR>}<ESC>O")
--- vim.keymap.set("i", "{;<CR>", "{<CR>};<ESC>O")
-
 -- Debugger Mapping
 vim.keymap.set("n", "<leader>dt", ":DapUiToggle<CR>", { noremap=true })
 vim.keymap.set("n", "<leader>db", ":DapToggleBreakpoint<CR>", { noremap=true })
@@ -59,4 +50,5 @@ vim.api.nvim_set_keymap('n', '<up>', [[:echo "STOP IT. USE 'j'"<CR>]], { noremap
 vim.api.nvim_set_keymap('n', '<down>', [[:echo "STOP IT. USE 'k'"<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<right>', [[:echo "STOP IT. USE 'l'"<CR>]], { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<C-t>', ":vs<CR>:terminal<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<C-t>', "<cmd>vsp<CR> <C-w>w <cmd>terminal<CR> i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap('t', '<Leader><ESC>', '<C-\\><C-n>', { noremap = true })
