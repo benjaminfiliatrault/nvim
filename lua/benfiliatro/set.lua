@@ -1,4 +1,28 @@
 vim.opt.guicursor = ""
+-- Unset background
+vim.o.background = ""
+
+-- Disable netrw
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+require("nvim-tree").setup({
+    sort = {
+        sorter = "case_sensitive",
+    },
+    trash = {
+        cmd = "trash"
+    },
+    view = {
+        width = 30,
+    },
+    renderer = {
+        group_empty = false,
+    },
+})
 
 vim.opt.nu = true
 vim.opt.relativenumber = true

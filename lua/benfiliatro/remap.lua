@@ -1,6 +1,6 @@
 -- Set leader key
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv", "<cmd>NvimTreeToggle<CR>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -59,4 +59,4 @@ vim.api.nvim_set_keymap('n', '<up>', [[:echo "STOP IT. USE 'j'"<CR>]], { noremap
 vim.api.nvim_set_keymap('n', '<down>', [[:echo "STOP IT. USE 'k'"<CR>]], { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<right>', [[:echo "STOP IT. USE 'l'"<CR>]], { noremap = true, silent = true })
 
-
+vim.api.nvim_set_keymap('n', '<C-t>', ":vs<CR>:terminal<CR>", { noremap = true, silent = true })

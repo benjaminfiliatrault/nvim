@@ -239,18 +239,61 @@ mason_lspconfig.setup_handlers({
 		require("lspconfig")[server_name].setup({ on_attach = on_attach, capabilities = capabilities })
 	end,
 
+	["yamlls"] = function()
+		require("lspconfig").yamlls.setup ( {
+			on_attach = on_attach,
+			capabilities = capabilities,
+			settings = {
+				yaml = {
+					fileTypes = { "yaml", "yml" },
+					schemas = {
+						"https://s3.amazonaws.com/cfn-resource-specifications-us-east-1-prod/schemas/2.15.0/all-spec.json",
+					},
+					customTags = {
+						"!fn",
+						"!And",
+						"!If",
+						"!Not",
+						"!Equals",
+						"!Or",
+						"!FindInMap sequence",
+						"!Base64",
+						"!Cidr",
+						"!Ref",
+						"!Ref Scalar",
+						"!Sub",
+						"!GetAtt",
+						"!GetAZs",
+						"!ImportValue",
+						"!Select",
+						"!Split",
+						"!Join sequence"
+					}
+				},
+			},
+		})
+	end,
+
 	["lua_ls"] = function()
 		require("lspconfig").lua_ls.setup({
 			on_attach = on_attach,
 			capabilities = capabilities,
 			settings = {
 				Lua = {
+					runtime = {
+						version = "LuaJIT",
+						path = vim.split(package.path, ";"),
+					},
 					workspace = {
 						checkThirdParty = false,
+						library = {
+							[vim.fn.expand "$VIMRUNTIME/lua"] = true,
+							[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+						},
 					},
 					diagnostics = {
 						-- Get the language server to recognize the `vim` global
-						globals = { "vim" },
+						globals = { "vim", "use" },
 					},
 				},
 			},
