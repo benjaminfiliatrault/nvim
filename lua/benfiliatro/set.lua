@@ -22,6 +22,11 @@ require("nvim-tree").setup({
     renderer = {
         group_empty = false,
     },
+    actions = {
+        open_file = {
+            quit_on_open = true,
+        },
+    },
 })
 
 vim.opt.nu = true
