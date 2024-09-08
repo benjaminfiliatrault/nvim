@@ -1,56 +1,57 @@
 -- Only required if you have packer configured as `opt`
-vim.cmd [[packadd packer.nvim]]
+vim.cmd([[packadd packer.nvim]])
 
-
-return require('packer').startup(function(use)
+return require("packer").startup(function(use)
 	-- Packer can manage itself
-	use('wbthomason/packer.nvim')
+	use("wbthomason/packer.nvim")
 
 	use({
-		'nvim-telescope/telescope.nvim', tag = '0.1.5',
-		requires = { { 'nvim-lua/plenary.nvim' } }
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.5",
+		requires = {
+			"nvim-telescope/telescope-file-browser.nvim",
+			"nvim-telescope/telescope-project.nvim",
+			{ "nvim-lua/plenary.nvim" },
+		},
 	})
 
-	use({ 'folke/neodev.nvim', opts = {} })
+	use({ "folke/neodev.nvim", opts = {} })
 
 	-- Theme
 	use({
-		'scottmckendry/cyberdream.nvim',
+		"scottmckendry/cyberdream.nvim",
 		requires = {
-			'SmiteshP/nvim-navic',
-		}
+			"SmiteshP/nvim-navic",
+		},
 	})
 
 	use({
-		'nvim-tree/nvim-tree.lua',
+		"nvim-tree/nvim-tree.lua",
 		requires = {
-			'nvim-tree/nvim-web-devicons'
-		}
+			"nvim-tree/nvim-web-devicons",
+		},
 	})
 
 	-- Dashboard
 	use({
-		'nvimdev/dashboard-nvim',
-		event = 'VimEnter',
+		"nvimdev/dashboard-nvim",
+		event = "VimEnter",
 		config = function()
-			require('dashboard').setup {
+			require("dashboard").setup({
 				theme = "hyper",
-				hide = {
-					statusline = false,
+				hide = { statusline = true },
+				preview = {
+					command = "lolcrab -g cool",
+					file_path = vim.fn.expand("~/.config/nvim/logo.txt"),
+					file_width = 123,
+					file_height = 11,
 				},
 				config = {
-					week_header = { enable = true },
+					header = {},
+					week_header = { enable = false },
 					shortcut = {
 						{
-							icon = "󰒲  ",
-							icon_hl = "DiffChange",
-							desc = "Update ",
-							group = "Directory",
-							action = "Lazy update",
-							key = "u",
-						},
-						{
-							icon = "   ",
+							icon = " ",
 							icon_hl = "DiffChange",
 							desc = "Files ",
 							group = "Statement",
@@ -58,7 +59,7 @@ return require('packer').startup(function(use)
 							key = "f",
 						},
 						{
-							icon = "   ",
+							icon = " ",
 							icon_hl = "DiffChange",
 							desc = "Recent ",
 							group = "DiffAdd",
@@ -66,7 +67,7 @@ return require('packer').startup(function(use)
 							key = "r",
 						},
 						{
-							icon = "   ",
+							icon = " ",
 							icon_hl = "DiffChange",
 							desc = "Grep ",
 							group = "DiffDelete",
@@ -74,7 +75,7 @@ return require('packer').startup(function(use)
 							key = "g",
 						},
 						{
-							icon = "   ",
+							icon = " ",
 							icon_hl = "DiffChange",
 							desc = "Quit ",
 							group = "WarningMsg",
@@ -82,20 +83,20 @@ return require('packer').startup(function(use)
 							key = "q",
 						},
 					},
-					project = { enable = false },
-					mru = { enable = false },
+					project = { enable = true, limit = 8, display = { "  ", "Directory" } },
+					mru = { enable = true, limit = 5, display = { "  ", "Recent" } },
 					footer = {},
 				},
-}		-- config
+			}) -- config
 		end,
-		requires = {'nvim-tree/nvim-web-devicons'}
-	} )
+		requires = { "nvim-tree/nvim-web-devicons" },
+	})
 
-	use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
+	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
 
 	-- Rust tooling
-	use('simrat39/rust-tools.nvim')
-	use('rust-lang/rust.vim')
+	use("simrat39/rust-tools.nvim")
+	use("rust-lang/rust.vim")
 
 	use({
 		"andythigpen/nvim-coverage",
@@ -106,52 +107,52 @@ return require('packer').startup(function(use)
 	})
 
 	-- Auto closing brackets
-	use('m4xshen/autoclose.nvim')
+	use("m4xshen/autoclose.nvim")
 
 	-- You know what this is
-	use('theprimeagen/harpoon')
+	use("theprimeagen/harpoon")
 	-- Git tree visualizer
-	use('mbbill/undotree')
+	use("mbbill/undotree")
 	-- Git plugin
-	use('tpope/vim-fugitive')
-	use('lewis6991/gitsigns.nvim')
-	use('rhysd/conflict-marker.vim')
+	use("tpope/vim-fugitive")
+	use("lewis6991/gitsigns.nvim")
+	use("rhysd/conflict-marker.vim")
 
-	use('github/copilot.vim')
+	use("github/copilot.vim")
 
 	-- Fuzzy Finder
-	use('junegunn/fzf')
+	use("junegunn/fzf")
 
-	use {
+	use({
 		"folke/todo-comments.nvim",
 		requires = { "nvim-lua/plenary.nvim" },
-	}
+	})
 
-	use {
-		'VonHeikemen/lsp-zero.nvim',
-		branch = 'v3.x',
+	use({
+		"VonHeikemen/lsp-zero.nvim",
+		branch = "v3.x",
 		requires = {
 			-- LSP Support
-			{ 'neovim/nvim-lspconfig' }, -- Required
-			{ 'williamboman/mason.nvim' }, -- Optional
-			{ 'williamboman/mason-lspconfig.nvim' }, -- Optional
-			{ 'nvim-lua/lsp-status.nvim' },
+			{ "neovim/nvim-lspconfig" }, -- Required
+			{ "williamboman/mason.nvim" }, -- Optional
+			{ "williamboman/mason-lspconfig.nvim" }, -- Optional
+			{ "nvim-lua/lsp-status.nvim" },
 
 			-- Autocompletion
-			{ 'hrsh7th/nvim-cmp' }, -- Required
-			{ 'hrsh7th/cmp-nvim-lsp' }, -- Required
-			{ 'hrsh7th/cmp-buffer' }, -- Optional
-			{ 'hrsh7th/cmp-path' }, -- Optional
-			{ 'saadparwaiz1/cmp_luasnip' }, -- Optional
-			{ 'hrsh7th/cmp-nvim-lua' }, -- Optional
-			{ 'mmolhoek/cmp-scss' },
+			{ "hrsh7th/nvim-cmp" }, -- Required
+			{ "hrsh7th/cmp-nvim-lsp" }, -- Required
+			{ "hrsh7th/cmp-buffer" }, -- Optional
+			{ "hrsh7th/cmp-path" }, -- Optional
+			{ "saadparwaiz1/cmp_luasnip" }, -- Optional
+			{ "hrsh7th/cmp-nvim-lua" }, -- Optional
+			{ "mmolhoek/cmp-scss" },
 
 			-- Snippets
-			{ 'L3MON4D3/LuaSnip' }, -- Required
-			{ 'rafamadriz/friendly-snippets' }, -- Optional
-			{ 'towolf/vim-helm' } -- Helm Chart yaml 
-		}
-	}
+			{ "L3MON4D3/LuaSnip" }, -- Required
+			{ "rafamadriz/friendly-snippets" }, -- Optional
+			{ "towolf/vim-helm" }, -- Helm Chart yaml
+		},
+	})
 
 	-- To easily surround selected word with quotes & other stuff
 	use({
@@ -161,47 +162,46 @@ return require('packer').startup(function(use)
 			require("nvim-surround").setup({
 				-- Configuration here, or leave empty to use defaults
 			})
-		end
+		end,
 	})
 
-	use('rhaiscript/vim-rhai')
+	use("rhaiscript/vim-rhai")
 
 	-- Auto detect tab length
-	use('tpope/vim-sleuth')
+	use("tpope/vim-sleuth")
 
 	-- Prettier recommended
-	use('sbdchd/neoformat')
+	use("sbdchd/neoformat")
 
 	-- Eslint official
-	use('mfussenegger/nvim-lint')
+	use("mfussenegger/nvim-lint")
 
-	use('preservim/vim-markdown')
+	use("preservim/vim-markdown")
 
 	-- For that pretty Status bar at the bottom
-	use('vim-airline/vim-airline')
+	use("vim-airline/vim-airline")
 
 	-- Improve comment writting
-	use('terrortylor/nvim-comment')
+	use("terrortylor/nvim-comment")
 
-	use { 'nvim-lualine/lualine.nvim', requires = { 'nvim-tree/nvim-web-devicons' } }
+	use({ "nvim-lualine/lualine.nvim", requires = { "nvim-tree/nvim-web-devicons" } })
 
 	-- All the Debugger stuff
-	use('mfussenegger/nvim-dap')
-	use('theHamsta/nvim-dap-virtual-text')
+	use("mfussenegger/nvim-dap")
+	use("theHamsta/nvim-dap-virtual-text")
 
 	use({
 		"rcarriga/nvim-dap-ui",
 		requires = {
 			{ "mfussenegger/nvim-dap" },
-			{ "nvim-neotest/nvim-nio"}
-		}
+			{ "nvim-neotest/nvim-nio" },
+		},
 	})
 
-	use ( { "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } } )
+	use({ "mxsdev/nvim-dap-vscode-js", requires = { "mfussenegger/nvim-dap" } })
 	use({
 		"microsoft/vscode-js-debug",
 		opt = true,
-		run = "npm install && npx gulp vsDebugServerBundle && mv dist out"
-	} )
-
+		run = "npm install && npx gulp vsDebugServerBundle && mv dist out",
+	})
 end)

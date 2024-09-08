@@ -46,7 +46,6 @@ mason.setup({
 
 mason_lspconfig.setup({
 	ensure_installed = {
-		'tsserver',
 		'lua_ls',
 		'rust_analyzer',
 		'html',
