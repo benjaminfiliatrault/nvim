@@ -23,7 +23,6 @@ require("dap-vscode-js").setup({
         'pwa-msedge',
         'node-terminal',
         'pwa-extensionHost',
-        'node',
     },
     -- log_file_path = "(stdpath cache)/dap_vscode_js.log" -- Path for file logging
     -- log_file_level = false -- Logging level for output to file. Set to false to disable file logging.
@@ -55,13 +54,12 @@ for _, language in ipairs(js_based_languages) do
             -- resolve source maps in nested locations while ignoring node_modules
             resolveSourceMapLocations = { "${workspaceFolder}/**", "!**/node_modules/**" },
             -- path to src in vite based projects (and most other projects as well)
-            cwd = "${workspaceFolder}/src",
+            cwd = "${workspaceFolder}",
             -- we don't want to debug code inside node_modules, so skip it!
             skipFiles = { "${workspaceFolder}/node_modules/**/*.js" },
-        },
+        }
     }
 end
-
 
 -- DAPUI configurations
 dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -72,10 +70,6 @@ dap.listeners.before.event_terminated["dapui_config"] = function()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
     dapui.close()
-end
-
-local function inspect_floating()
-    dapui.float_element('5')
 end
 
 vim.keymap.set('n', '<leader>ui', require 'dapui'.toggle)

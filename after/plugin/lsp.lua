@@ -222,11 +222,23 @@ local rust_tools_rust_server = {
 		["rust-analyzer"] = {
 			cargo = {
 				autoReload = true,
+				buildScripts = {
+					enable = true,
+				},
 			},
 			diagnostics = {
 				-- Bug in Rust Analyzer, waiting for a fix
 				disabled = { "unresolved-proc-macro" }
-			}
+			},
+			imports = {
+				granularity = {
+					group = "module",
+				},
+				prefix = "self",
+			},
+			procMacro = {
+				enable = true
+			},
 		},
 	},
 }
