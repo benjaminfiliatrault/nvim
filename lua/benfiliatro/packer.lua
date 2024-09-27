@@ -118,7 +118,10 @@ return require("packer").startup(function(use)
 	use("lewis6991/gitsigns.nvim")
 	use("rhysd/conflict-marker.vim")
 
-	use("github/copilot.vim")
+	use({
+		"pmizio/typescript-tools.nvim",
+		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+	})
 
 	-- Fuzzy Finder
 	use("junegunn/fzf")
