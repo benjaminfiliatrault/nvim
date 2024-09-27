@@ -43,8 +43,8 @@ return require("packer").startup(function(use)
 				preview = {
 					command = "lolcrab -g cool",
 					file_path = vim.fn.expand("~/.config/nvim/logo.txt"),
-					file_width = 123,
-					file_height = 11,
+					file_width = 99,
+					file_height = 10,
 				},
 				config = {
 					header = {},
