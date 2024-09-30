@@ -168,10 +168,17 @@ return require("packer").startup(function(use)
 		end,
 	})
 
-	use("rhaiscript/vim-rhai")
+	use({
+		"luckasRanarison/tailwind-tools.nvim",
+		run = ":UpdateRemotePlugins",
+		requires = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-telescope/telescope.nvim", -- optional
+			"neovim/nvim-lspconfig", -- optional
+		},
+	})
 
-	-- Auto detect tab length
-	use("tpope/vim-sleuth")
+	use("rhaiscript/vim-rhai")
 
 	-- Prettier recommended
 	use("sbdchd/neoformat")

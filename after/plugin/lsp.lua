@@ -235,10 +235,22 @@ mason_lspconfig.setup_handlers({
 	end,
 
 	["ts_ls"] = function()
+		require("tailwind-tools").setup({
+			-- your configuration
+		})
 		require("typescript-tools").setup({
 			on_attach = on_attach,
 			capabilities = capabilities,
-			settings = {},
+			implicitProjectConfiguration = {
+				checkJs = true,
+			},
+			settings = {
+				expose_as_code_action = "all",
+				jsx_close_tag = {
+					enable = false,
+					filetypes = { "javascriptreact", "typescriptreact" },
+				},
+			},
 		})
 	end,
 
