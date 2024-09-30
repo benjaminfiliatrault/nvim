@@ -188,6 +188,13 @@ return require("packer").startup(function(use)
 
 	use("preservim/vim-markdown")
 
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = function()
+			vim.fn["mkdp#util#install"]()
+		end,
+	})
+
 	-- For that pretty Status bar at the bottom
 	use("vim-airline/vim-airline")
 
