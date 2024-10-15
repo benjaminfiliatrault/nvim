@@ -9,13 +9,11 @@ return require("packer").startup(function(use)
 		"nvim-telescope/telescope.nvim",
 		tag = "0.1.5",
 		requires = {
-			"nvim-telescope/telescope-file-browser.nvim",
-			"nvim-telescope/telescope-project.nvim",
 			{ "nvim-lua/plenary.nvim" },
 		},
 	})
 
-	use({ "folke/neodev.nvim", opts = {} })
+	use({ "folke/lazydev.nvim", opts = {} })
 
 	-- Theme
 	use({
@@ -35,60 +33,6 @@ return require("packer").startup(function(use)
 	-- Dashboard
 	use({
 		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		config = function()
-			require("dashboard").setup({
-				theme = "hyper",
-				hide = { statusline = true },
-				preview = {
-					command = "lolcrab -g cool",
-					file_path = vim.fn.expand("~/.config/nvim/logo.txt"),
-					file_width = 99,
-					file_height = 10,
-				},
-				config = {
-					header = {},
-					week_header = { enable = false },
-					shortcut = {
-						{
-							icon = " ",
-							icon_hl = "DiffChange",
-							desc = "Files ",
-							group = "Statement",
-							action = "Telescope find_files",
-							key = "f",
-						},
-						{
-							icon = " ",
-							icon_hl = "DiffChange",
-							desc = "Recent ",
-							group = "DiffAdd",
-							action = "Telescope oldfiles",
-							key = "r",
-						},
-						{
-							icon = " ",
-							icon_hl = "DiffChange",
-							desc = "Grep ",
-							group = "DiffDelete",
-							action = "Telescope live_grep",
-							key = "g",
-						},
-						{
-							icon = " ",
-							icon_hl = "DiffChange",
-							desc = "Quit ",
-							group = "WarningMsg",
-							action = "qall!",
-							key = "q",
-						},
-					},
-					project = { enable = true, limit = 8, display = { "  ", "Directory" } },
-					mru = { enable = true, limit = 5, display = { "  ", "Recent" } },
-					footer = {},
-				},
-			}) -- config
-		end,
 		requires = { "nvim-tree/nvim-web-devicons" },
 	})
 
@@ -111,8 +55,10 @@ return require("packer").startup(function(use)
 
 	-- You know what this is
 	use("theprimeagen/harpoon")
+
 	-- Git tree visualizer
 	use("mbbill/undotree")
+
 	-- Git plugin
 	use("tpope/vim-fugitive")
 	use("lewis6991/gitsigns.nvim")
@@ -122,6 +68,8 @@ return require("packer").startup(function(use)
 		"pmizio/typescript-tools.nvim",
 		requires = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
 	})
+
+	use("prisma/vim-prisma")
 
 	-- Fuzzy Finder
 	use("junegunn/fzf")

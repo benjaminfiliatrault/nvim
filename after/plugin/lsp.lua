@@ -1,21 +1,15 @@
--- IMPORTANT: make sure to setup neodev BEFORE lspconfig
-require("neodev").setup({
-	-- add any options here, or leave empty to use the default settings
-	library = { plugins = { "nvim-dap-ui" }, types = true },
-})
-
 local cmp = require("cmp")
 local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 local lsp_status = require("lsp-status")
-local luasnip = require("luasnip")
 
 mason.setup()
 mason_lspconfig.setup({
 	ensure_installed = {
 		"lua_ls",
 		"rust_analyzer",
-        "tailwindcss",
+		"tailwindcss",
+        "eslint",
 		"emmet_ls",
 		"ts_ls",
 		"html",
@@ -24,12 +18,7 @@ mason_lspconfig.setup({
 	},
 })
 
-require("luasnip.loaders.from_snipmate").lazy_load()
-require("luasnip").filetype_extend("javascript", { "javascriptreact" })
-require("luasnip").filetype_extend("typescript", { "javascriptreact" })
-require("luasnip").filetype_extend("javascript", { "html" })
-require("luasnip").filetype_extend("typescript", { "html" })
-
+require("todo-comments").setup()
 require("autoclose").setup()
 
 -- Set completeopt to have a better completion experience
@@ -53,11 +42,6 @@ cmp.setup({
 			return not context.in_treesitter_capture("comment") and not context.in_syntax_group("Comment")
 		end
 	end,
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
 	mapping = cmp.mapping.preset.insert({
 		["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
 
@@ -72,8 +56,6 @@ cmp.setup({
 		["<Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
 			else
 				fallback()
 			end
