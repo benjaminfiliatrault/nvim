@@ -30,10 +30,79 @@ return require("packer").startup(function(use)
 		},
 	})
 
+	-- Note taking
+	use({
+		"epwalsh/obsidian.nvim",
+		tag = "*", -- recommended, use latest release instead of latest commit
+		requires = {
+			-- Required.
+			"nvim-lua/plenary.nvim",
+		},
+	})
+
 	-- Dashboard
 	use({
 		"nvimdev/dashboard-nvim",
 		requires = { "nvim-tree/nvim-web-devicons" },
+		event = "VimEnter",
+		config = function()
+			require("dashboard").setup({
+				theme = "doom",
+				hide = { statusline = true },
+				preview = {
+					command = "lolcrab -a -d 1 -c red",
+					file_path = vim.fn.expand("~/.config/nvim/logo.txt"),
+					file_width = 99,
+					file_height = 10,
+				},
+				config = {
+					header = {},
+					week_header = { enable = false },
+					center = {
+						{
+							desc = "Files ",
+							group = "Statement",
+							action = "Telescope find_files",
+							key = "f",
+							desc_hl = "group",
+							key_hl = "TabLine",
+							key_format = " -> %s",
+						},
+						{
+							icon_hl = "DiffChange",
+							desc = "Recent ",
+							group = "DiffAdd",
+							action = "Telescope oldfiles",
+							key = "r",
+							desc_hl = "group",
+							key_hl = "TabLine",
+							key_format = " -> %s",
+						},
+						{
+							icon_hl = "DiffChange",
+							desc = "Grep ",
+							group = "DiffDelete",
+							action = "Telescope live_grep",
+							key = "g",
+							desc_hl = "group",
+							key_hl = "TabLine",
+							key_format = " -> %s",
+						},
+						{
+							icon_hl = "DiffChange",
+							desc = "Quit ",
+							group = "WarningMsg",
+							action = "qall!",
+							key = "q",
+							desc_hl = "group",
+							key_hl = "TabLine",
+							key_format = " -> %s",
+						},
+					},
+					footer = {},
+				},
+			}) -- config
+		end,
 	})
 
 	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
