@@ -236,6 +236,6 @@ return require("packer").startup(function(use)
 	use({
 		"microsoft/vscode-js-debug",
 		opt = true,
-		run = "npm install && npx gulp vsDebugServerBundle && mv dist out",
+		run = "npm ci && npx gulp vsDebugServerBundle && mv dist out",
 	})
 end)
