@@ -7,7 +7,6 @@ mason.setup()
 mason_lspconfig.setup({
 	ensure_installed = {
 		"lua_ls",
-		"rust_analyzer",
 		"tailwindcss",
 		"eslint",
 		"emmet_ls",
@@ -108,13 +107,6 @@ local function on_attach(client, buffer)
 	local keymap = vim.keymap
 	local keymap_opts = { buffer = buffer, silent = true }
 
-	if client.name == "rust_analyzer" then
-		keymap.set("n", "<leader>h", ":RustHoverActions<cr>", keymap_opts)
-		keymap.set("n", "<leader>gp", ":RustParentModule<cr>", keymap_opts)
-	else
-		keymap.set("n", "<leader>h", vim.lsp.buf.hover, keymap_opts)
-	end
-
 	-- Code navigation and shortcuts
 	local opts = { buffer = buffer, remap = false }
 
@@ -162,54 +154,10 @@ local function on_attach(client, buffer)
 
 	-- Goto previous/next diagnostic warning/error
 	keymap.set("n", "nd", vim.diagnostic.goto_next, keymap_opts)
-	keymap.set("n", "nd", vim.diagnostic.goto_prev, keymap_opts)
 
 	-- on_attach(client)
 	lsp_status.on_attach(client)
 end
-
-local rust_tools_config = {
-	-- rust-tools settings, etc.
-	dap = function()
-		local install_root_dir = vim.fn.stdpath("data") .. "/mason"
-		local extension_path = install_root_dir .. "/packages/codelldb/extension/"
-		local codelldb_path = extension_path .. "adapter/codelldb"
-		local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-
-		return {
-			adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-		}
-	end,
-}
-
-local rust_tools_rust_server = {
-	on_attach = on_attach,
-	settings = {
-		-- List of all options:
-		-- https://github.com/simrat39/rust-tools.nvim/wiki/Server-Configuration-Schema
-		["rust-analyzer"] = {
-			cargo = {
-				autoReload = true,
-				buildScripts = {
-					enable = true,
-				},
-			},
-			diagnostics = {
-				-- Bug in Rust Analyzer, waiting for a fix
-				disabled = { "unresolved-proc-macro" },
-			},
-			imports = {
-				granularity = {
-					group = "module",
-				},
-				prefix = "self",
-			},
-			procMacro = {
-				enable = true,
-			},
-		},
-	},
-}
 
 mason_lspconfig.setup_handlers({
 	function(server_name)
@@ -325,17 +273,62 @@ mason_lspconfig.setup_handlers({
 			},
 		})
 	end,
-
-	["rust_analyzer"] = function()
-		require("rust-tools").setup({
-			-- rust_tools specific settings
-			tools = rust_tools_config,
-			-- on_attach is actually bound in server for rust-tools
-			server = rust_tools_rust_server,
-			capabilities = capabilities,
-		})
-	end,
 })
+
+local rust_lsp_server = {
+	on_attach = on_attach,
+	settings = {
+		-- List of all options:
+		-- https://github.com/simrat39/rust-tools.nvim/wiki/Server-Configuration-Schema
+		["rust-analyzer"] = {
+			cargo = {
+				autoReload = true,
+				buildScripts = {
+					enable = true,
+				},
+			},
+			diagnostics = {
+				-- Bug in Rust Analyzer, waiting for a fix
+				disabled = { "unresolved-proc-macro" },
+			},
+			imports = {
+				granularity = {
+					group = "module",
+				},
+				prefix = "self",
+			},
+			procMacro = {
+				enable = true,
+			},
+		},
+	},
+}
+
+local rust_lsp_config = {
+	-- rust-tools settings, etc.
+	dap = function()
+		local install_root_dir = vim.fn.stdpath("data") .. "/mason"
+		local extension_path = install_root_dir .. "/packages/codelldb/extension/"
+		local codelldb_path = extension_path .. "adapter/codelldb"
+		-- The liblldb extension is .so for Linux and .dylib for MacOS
+		local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+
+		local cfg = require("rustaceanvim.config")
+		return {
+			adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
+		}
+	end,
+}
+
+vim.g.rustaceanvim = {
+	-- Plugin configuration
+	tools = rust_lsp_config,
+	capabilities = capabilities,
+	-- LSP configuration
+	server = rust_lsp_server,
+	-- DAP configuration
+	dap = rust_lsp_config,
+}
 
 require("gitsigns").setup({
 	signs = {

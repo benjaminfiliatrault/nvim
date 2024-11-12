@@ -108,7 +108,7 @@ return require("packer").startup(function(use)
 	use("nvim-treesitter/nvim-treesitter", { run = ":TSUpdate" })
 
 	-- Rust tooling
-	use("simrat39/rust-tools.nvim")
+	use("mrcjkb/rustaceanvim")
 	use("rust-lang/rust.vim")
 
 	use({
