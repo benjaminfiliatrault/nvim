@@ -9,7 +9,7 @@ mason_lspconfig.setup({
 		"lua_ls",
 		"rust_analyzer",
 		"tailwindcss",
-        "eslint",
+		"eslint",
 		"emmet_ls",
 		"ts_ls",
 		"html",
@@ -79,7 +79,6 @@ cmp.setup({
 				triggers = { "$" }, -- default value
 				extension = ".scss", -- default value
 				pattern = [=[\%(\s\|^\)\zs\$[[:alnum:]_\-0-9]*:\?]=], -- default value
-				folders = { "node_modules/@soltivo/draw-a-line/core/assets/styles" },
 			},
 		},
 	},
