@@ -1,49 +1,59 @@
--- Set transparency
-local is_transparent = true -- Set to false to disable transparency in 🪟
-if vim.fn.has("unix") == 1 then
-    is_transparent = true
-end
-
--- Default options:
-require("cyberdream").setup({
-    -- Enable transparent background
-    transparent = is_transparent,
-
-    -- Enable italics comments
-    italic_comments = true,
-
-    -- Replace all fillchars with ' ' for the ultimate clean look
-    hide_fillchars = true,
-
-    -- Modern borderless telescope theme
-    borderless_telescope = true,
-
-    -- Set terminal colors used in `:terminal`
-    terminal_colors = true,
-
-    theme = {
-        variant = "default", -- use "light" for the light variant
-        highlights = {
-            -- Highlight groups to override, adding new groups is also possible
-            -- See `:h highlight-groups` for a list of highlight groups or run `:hi` to see all groups and their current values
-
-            -- Example:
-            Comment = { fg = "#696969", bg = "NONE", italic = true },
-
-            -- Complete list can be found in `lua/cyberdream/theme.lua`
-        },
-
-        -- Override a color entirely
-        colors = {
-            -- For a list of colors see `lua/cyberdream/colours.lua`
-            -- Example:
-            bg = "#000000",
-            green = "#00ff00",
-            magenta = "#ff00ff",
-        },
-    },
+require("catppuccin").setup({
+	flavour = "mocha", -- latte, frappe, macchiato, mocha
+	background = { -- :h background
+		dark = "mocha",
+	},
+	transparent_background = false,
+	show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+	term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+	dim_inactive = {
+		enabled = false, -- dims the background color of inactive window
+		shade = "dark",
+		percentage = 0.15, -- percentage of the shade to apply to the inactive window
+	},
+	no_italic = false, -- Force no italic
+	no_bold = false, -- Force no bold
+	no_underline = false, -- Force no underline
+	styles = { -- Handles the styles of general hi groups (see `:h highlight-args`):
+		comments = { "italic" }, -- Change the style of comments
+		conditionals = { "italic" },
+		loops = {},
+		functions = {},
+		keywords = {},
+		strings = {},
+		variables = {},
+		numbers = {},
+		booleans = {},
+		properties = {},
+		types = {},
+		operators = {},
+		-- miscs = {}, -- Uncomment to turn off hard-coded styles
+	},
+	color_overrides = {
+		all = {
+			base = "#000000",
+			mantle = "#000000",
+			crust = "#000000",
+		},
+	},
+	custom_highlights = {},
+	default_integrations = true,
+	integrations = {
+		cmp = true,
+		gitsigns = true,
+		gitgutter = true,
+		nvimtree = true,
+		treesitter = true,
+		notify = true,
+		telescope = {
+			enabled = true,
+		},
+		mini = {
+			enabled = true,
+			indentscope_color = "",
+		},
+	},
 })
 
 -- setup must be called before loading
-vim.cmd("colorscheme cyberdream")
-
+vim.cmd("colorscheme catppuccin")

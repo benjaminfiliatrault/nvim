@@ -16,12 +16,7 @@ return require("packer").startup(function(use)
 	use({ "folke/lazydev.nvim", opts = {} })
 
 	-- Theme
-	use({
-		"scottmckendry/cyberdream.nvim",
-		requires = {
-			"SmiteshP/nvim-navic",
-		},
-	})
+	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	use({
 		"nvim-tree/nvim-tree.lua",
@@ -50,7 +45,7 @@ return require("packer").startup(function(use)
 				theme = "doom",
 				hide = { statusline = true },
 				preview = {
-					command = "lolcrab -a -d 1 -c red",
+					command = "lolcrab",
 					file_path = vim.fn.expand("~/.config/nvim/logo.txt"),
 					file_width = 99,
 					file_height = 10,
@@ -218,7 +213,8 @@ return require("packer").startup(function(use)
 	-- Improve comment writting
 	use("terrortylor/nvim-comment")
 
-	use({ "nvim-lualine/lualine.nvim", requires = { "nvim-tree/nvim-web-devicons" } })
+    -- Status bar at the bottom
+	use({ "nvim-lualine/lualine.nvim", requires = { "nvim-tree/nvim-web-devicons", "SmiteshP/nvim-navic" } })
 
 	-- All the Debugger stuff
 	use("mfussenegger/nvim-dap")
