@@ -3,7 +3,7 @@ local nvim_navic = require("nvim-navic")
 require("lualine").setup({
 	options = {
 		component_separators = { left = "", right = "" },
-		section_separators = { left = "", right = "" },
+		section_separators = { left = "", right = "" },
 		theme = "catppuccin-mocha",
 		globalstatus = true,
 		disabled_filetypes = { statusline = { "dashboard", "alpha" } },
@@ -36,7 +36,9 @@ require("lualine").setup({
 				end,
 			},
 		},
-		lualine_y = { { "location" } },
+		lualine_y = {
+			{ "location" },
+		},
 		lualine_z = {
 			function()
 				return " " .. os.date("%H:%M") .. " 🚀 "
