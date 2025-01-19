@@ -36,14 +36,9 @@ require("lualine").setup({
 				end,
 			},
 		},
-		lualine_y = {
-			{ "location" },
-		},
-		lualine_z = {
-			function()
-				return " " .. os.date("%H:%M") .. " 🚀 "
-			end,
-		},
+		lualine_x = { "encoding", "fileformat", "filetype" },
+		lualine_y = { "progress" },
+		lualine_z = { { "location" } },
 	},
 	extensions = { "lazy", "toggleterm", "mason", "neo-tree", "trouble" },
 })
