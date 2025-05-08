@@ -117,6 +117,9 @@ return require("packer").startup(function(use)
 	-- Auto closing brackets
 	use("m4xshen/autoclose.nvim")
 
+    -- Auto detect tab/indentation width
+    use("tpope/vim-sleuth")
+
 	-- You know what this is
 	use("theprimeagen/harpoon")
 
@@ -213,7 +216,7 @@ return require("packer").startup(function(use)
 	-- Improve comment writting
 	use("terrortylor/nvim-comment")
 
-    -- Status bar at the bottom
+	-- Status bar at the bottom
 	use({ "nvim-lualine/lualine.nvim", requires = { "nvim-tree/nvim-web-devicons", "SmiteshP/nvim-navic" } })
 
 	-- All the Debugger stuff

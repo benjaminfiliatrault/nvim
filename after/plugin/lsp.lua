@@ -8,7 +8,6 @@ mason_lspconfig.setup({
 	ensure_installed = {
 		"lua_ls",
 		"tailwindcss",
-		"eslint",
 		"emmet_ls",
 		"ts_ls",
 		"html",
