@@ -1,4 +1,4 @@
-require("benfiliatro")
+require("config")
 
 -- [[ Filetype Detection ]]
 -- Detect Jenkinsfile as a Groovy Filetype

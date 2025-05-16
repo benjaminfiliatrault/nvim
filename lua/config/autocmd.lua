@@ -1,4 +1,4 @@
-local U = require("benfiliatro.utils")
+local U = require("config.utils")
 -----------------------------------------------------------
 -- Autocommand functions
 -----------------------------------------------------------

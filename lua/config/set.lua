@@ -1,6 +1,4 @@
 vim.opt.guicursor = ""
--- Unset background
-vim.o.background = ""
 
 -- Disable netrw
 vim.g.loaded_netrw = 1
@@ -10,35 +8,6 @@ vim.g.loaded_perl_provider = 0
 
 -- optionally enable 24-bit colour
 vim.opt.termguicolors = true
-
-require("nvim-tree").setup({
-    filters = {
-        dotfiles = false,
-    },
-    git = { ignore = false },
-    sort = {
-        sorter = "case_sensitive",
-    },
-    trash = {
-        cmd = "trash"
-    },
-    view = {
-        width = 35,
-        side = "right"
-    },
-    renderer = {
-        group_empty = false,
-    },
-    actions = {
-        open_file = {
-            quit_on_open = true,
-        },
-    },
-    update_focused_file = {
-        enable = true,
-        update_root = true,
-    },
-})
 
 vim.opt.nu = true
 vim.opt.relativenumber = true
