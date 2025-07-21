@@ -30,7 +30,6 @@ return {
 		local lspconfig = require("lspconfig")
 
 		local keymap = vim.keymap -- for conciseness
-		local keymap_opts = { silent = true }
 
 		vim.api.nvim_create_autocmd("LspAttach", {
 			group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -72,6 +71,8 @@ return {
 				end, opts)
 
 				-- Show diagnostic popup on cursor hover
+        -- Disable until I need it, else remove later
+        -- it shows a floating virtual text when the cursor is on a line with a diagnostic
 				local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
 				vim.api.nvim_create_autocmd("CursorHold", {
 					callback = function()
@@ -80,8 +81,22 @@ return {
 					group = diag_float_grp,
 				})
 
+				---@param jumpCount number
+				local function jumpWithVirtLineDiags(jumpCount)
+					pcall(vim.api.nvim_del_augroup_by_name, "jumpWithVirtLineDiags") -- prevent autocmd for repeated jumps
+
+					vim.diagnostic.jump({ count = jumpCount })
+
+					vim.diagnostic.config({
+						virtual_text = false,
+						virtual_lines = { current_line = true },
+					})
+				end
+
 				-- Goto previous/next diagnostic warning/error
-				keymap.set("n", "nd", vim.diagnostic.goto_next, keymap_opts)
+				keymap.set("n", "nd", function()
+					jumpWithVirtLineDiags(1)
+				end, { desc = "󰒕 Next diagnostic" })
 
 				opts.desc = "Restart LSP"
 				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
@@ -103,8 +118,9 @@ return {
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		vim.diagnostic.config({
-			virtual_text = true,
-			float = true,
+      virtual_text = false,
+      virtual_lines = false,
+			float = false,
 			signs = {
 				text = {
 					[vim.diagnostic.severity.ERROR] = " ",
