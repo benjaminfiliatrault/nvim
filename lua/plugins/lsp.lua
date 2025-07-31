@@ -70,15 +70,25 @@ return {
 					vim.lsp.buf.code_action()
 				end, opts)
 
-				-- Show diagnostic popup on cursor hover
-        -- Disable until I need it, else remove later
-        -- it shows a floating virtual text when the cursor is on a line with a diagnostic
-				local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
 				vim.api.nvim_create_autocmd("CursorHold", {
 					callback = function()
-						vim.diagnostic.open_float(nil, { focusable = false })
+						-- Check for diagnostics at current cursor position
+						local diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line(".") - 1 })
+						if #diagnostics > 0 then
+							-- Open a floating window to display diagnostics
+							vim.diagnostic.open_float(nil, {
+								scope = "cursor",
+								focusable = false,
+								close_events = {
+									"CursorMoved",
+									"CursorMovedI",
+									"BufHidden",
+									"InsertCharPre",
+									"WinLeave",
+								},
+							})
+						end
 					end,
-					group = diag_float_grp,
 				})
 
 				---@param jumpCount number
@@ -118,8 +128,8 @@ return {
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		vim.diagnostic.config({
-      virtual_text = false,
-      virtual_lines = false,
+			virtual_text = false,
+			virtual_lines = false,
 			float = false,
 			signs = {
 				text = {
