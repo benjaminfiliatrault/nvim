@@ -34,7 +34,8 @@ autocmd("BufEnter", {
 	group = augroup("conceal", { clear = true }),
 	callback = function()
 		if U.contains(concealFile, vim.bo.filetype) then
-			vim.opt.conceallevel = 2
+      -- Disabled for know until I change my mind
+			vim.opt.conceallevel = 0
 		end
 	end,
 })

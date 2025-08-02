@@ -35,8 +35,8 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.cursorcolumn = true;
-vim.opt.cursorline = true;
+vim.opt.cursorcolumn = true
+vim.opt.cursorline = true
 
 -- disable that anoying foldenable
 vim.opt.foldenable = false
@@ -44,3 +44,7 @@ vim.opt.foldenable = false
 -- auto format rust files on save
 vim.g.rustfmt_autosave = 1
 
+-- disables the search count at each search.
+vim.opt.shortmess:append("S")
+
+vim.opt.timeoutlen = 250
