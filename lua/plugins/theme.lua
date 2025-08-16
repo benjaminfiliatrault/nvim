@@ -2,6 +2,10 @@ return {
   { "nvim-tree/nvim-web-devicons", lazy = true },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000, config = function()
     require("catppuccin").setup({
+      float = {
+        solid = false,
+        transparent = false,
+      },
       flavour = "mocha", -- latte, frappe, macchiato, mocha
       background = { -- :h background
         dark = "mocha",
@@ -43,6 +47,9 @@ return {
       default_integrations = true,
       integrations = {
         cmp = true,
+        dap = true,
+        dap_ui = true,
+        harpoon = true,
         gitsigns = true,
         gitgutter = true,
         nvimtree = true,
