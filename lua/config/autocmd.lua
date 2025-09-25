@@ -33,9 +33,10 @@ autocmd("BufEnter", {
 	desc = "Conceal for markdown files",
 	group = augroup("conceal", { clear = true }),
 	callback = function()
-		if U.contains(concealFile, vim.bo.filetype) then
-      -- Disabled for know until I change my mind
-			vim.opt.conceallevel = 0
+		-- Only activate conceallevel on Obsidian repo and markdown files
+		if U.contains(concealFile, vim.bo.filetype) and string.find(vim.api.nvim_buf_get_name(0), "DeezNotes") then
+			-- Disabled for know until I change my mind
+			vim.opt.conceallevel = 2
 		end
 	end,
 })
