@@ -76,6 +76,13 @@ return {
 				},
 			})
 
+			local clrs = require("catppuccin.palettes").get_palette()
+
+			vim.api.nvim_set_hl(0, "LineNr", { fg = clrs.mauve })
+			vim.api.nvim_set_hl(0, "CursorLineNr", { fg = clrs.flamingo })
+			vim.api.nvim_set_hl(0, "LineNrAbove", { fg = clrs.overlay1 })
+			vim.api.nvim_set_hl(0, "LineNrBelow", { fg = clrs.overlay1 })
+
 			-- load the colorscheme here
 			vim.cmd("colorscheme catppuccin")
 		end,
