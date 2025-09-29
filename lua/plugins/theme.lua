@@ -7,8 +7,8 @@ return {
 		config = function()
 			require("catppuccin").setup({
 				float = {
-					solid = false,
-					transparent = false,
+					solid = true,
+					transparent = true,
 				},
 				flavour = "mocha", -- latte, frappe, macchiato, mocha
 				background = { -- :h background
