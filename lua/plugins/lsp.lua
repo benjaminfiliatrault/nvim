@@ -27,8 +27,6 @@ return {
 	},
 	config = function()
 		-- import lspconfig plugin
-		local lspconfig = require("lspconfig")
-
 		local keymap = vim.keymap -- for conciseness
 
 		vim.api.nvim_create_autocmd("LspAttach", {
@@ -112,7 +110,7 @@ return {
 			end,
 		})
 
-		lspconfig.lua_ls.setup({
+		vim.lsp.config("lua_ls", {
 			settings = {
 				Lua = {
 					diagnostics = {
@@ -124,6 +122,8 @@ return {
 				},
 			},
 		})
+
+    vim.lsp.enable("lua_ls", true)
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		vim.diagnostic.config({
