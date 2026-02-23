@@ -3,7 +3,7 @@ return {
   config = function()
     require("nvim-tree").setup({
       filters = {
-        dotfiles = false,
+        dotfiles = true,
       },
       git = { ignore = false },
       sort = {
@@ -26,7 +26,9 @@ return {
       },
       update_focused_file = {
         enable = true,
-        update_root = true,
+        update_root = {
+          enable = false,
+        },
       },
     })
 

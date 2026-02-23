@@ -2,17 +2,19 @@ return {
 	"sbdchd/neoformat",
 	config = function()
 		local ext_to_lang = {
-			prisma = "javascript",
+			css = "css",
+			go = "go",
 			js = "javascript",
 			json = "javascript",
 			jsx = "javascript",
+			lua = "lua",
+			prisma = "javascript",
+			html = "html",
+			py = "python",
+			rs = "rust",
+			scss = "css",
 			ts = "typescript",
 			tsx = "typescript",
-			css = "css",
-			scss = "css",
-			py = "python",
-			lua = "lua",
-			rs = "rust",
 		}
 
 		local function format()

@@ -55,12 +55,13 @@ return {
 						CursorLine = { bg = darken(palette.surface0, 0.8) },
 					}
 				end,
-				default_integrations = true,
+				default_integrations = false,
 				integrations = {
 					cmp = true,
 					dap = true,
 					dap_ui = true,
 					harpoon = true,
+          dashboard = true,
 					gitsigns = true,
 					gitgutter = true,
 					nvimtree = true,
