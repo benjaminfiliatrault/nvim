@@ -5,7 +5,7 @@ return {
       filters = {
         dotfiles = false,
       },
-      git = { ignore = true },
+      git = { ignore = false },
       sort = {
         sorter = "case_sensitive",
       },
