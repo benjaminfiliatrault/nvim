@@ -30,28 +30,30 @@ return {
 			automatic_enable = true,
 			-- list of servers for mason to install
 			ensure_installed = {
-				"marksman",
-				"ts_ls",
-				"html",
 				"cssls",
-				"tailwindcss",
-				"svelte",
-				"lua_ls",
-				"graphql",
 				"emmet_ls",
+				"graphql",
+				"html",
+				"lua_ls",
+				"marksman",
 				"prismals",
 				"pyright",
+				"svelte",
+				"tailwindcss",
+				"ts_ls",
+				"jsonls",
 			},
 		})
 
 		mason_tool_installer.setup({
+			automatic_enable = true,
 			ensure_installed = {
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
-				"pylint", -- python linter
 				"eslint_d", -- js linter
+				"isort", -- python formatter
+				"prettier", -- prettier formatter
+				"pylint", -- python linter
+				"stylua", -- lua formatter
+				"vacuum", -- openapi linter
 			},
 		})
 	end,

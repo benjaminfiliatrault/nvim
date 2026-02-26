@@ -3,6 +3,7 @@ return {
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
+		"b0o/schemastore.nvim",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{
 			"folke/lazydev.nvim",
@@ -139,5 +140,20 @@ return {
 				},
 			},
 		})
+
+		vim.lsp.buf_request(0, "textDocument/definition", nil, function(error, _)
+			print(vim.inspect(error))
+		end)
+
+		vim.lsp.config("jsonls", {
+			settings = {
+				json = {
+					schemas = require("schemastore").json.schemas(),
+					validate = { enable = true },
+				},
+			},
+		})
+
+		vim.lsp.enable("jsonls", true)
 	end,
 }
