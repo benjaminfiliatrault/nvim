@@ -13,6 +13,7 @@ return {
 			py = "python",
 			rs = "rust",
 			scss = "css",
+			sql = "sql",
 			ts = "typescript",
 			tsx = "typescript",
 		}

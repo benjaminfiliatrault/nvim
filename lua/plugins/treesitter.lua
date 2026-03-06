@@ -2,10 +2,14 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	event = { "BufReadPre", "BufNewFile" },
 	build = ":TSUpdate",
-  lazy = false,
+	lazy = false,
 	dependencies = {
 		"windwp/nvim-ts-autotag",
 		"nvim-treesitter/nvim-treesitter-context",
+		{
+			"NoahTheDuke/vim-just",
+			ft = { "just" },
+		},
 	},
 	config = function()
 		local context = require("treesitter-context")
