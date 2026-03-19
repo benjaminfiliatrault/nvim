@@ -52,9 +52,9 @@ return {
 				additional_vim_regex_highlighting = false,
 			},
 			-- enable indentation
-			indent = { enable = true },
+			indent = { enable = false },
 			-- enable autotagging (w/ nvim-ts-autotag plugin)
-			autotag = { enable = true },
+			autotag = { enable = false },
 			-- ensure these language parsers are installed
 			ensure_installed = {
 				"bash",
@@ -82,9 +82,9 @@ return {
 			},
 			incremental_selection = {
 				enable = true,
-				keymaps = {
-					init_selection = "<C-space>",
-					node_incremental = "<C-space>",
+				keymap = {
+					init_selection = "<C-s>",
+					node_incremental = "<C-s>",
 					scope_incremental = false,
 					node_decremental = "<bs>",
 				},
