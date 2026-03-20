@@ -1,41 +1,51 @@
 return {
-	"sbdchd/neoformat",
-	config = function()
-		local ext_to_lang = {
-			css = "css",
-			go = "go",
-			js = "javascript",
-			json = "javascript",
-			jsx = "javascript",
-			lua = "lua",
-			prisma = "javascript",
-			html = "html",
-			py = "python",
-			rs = "rust",
-			scss = "css",
-			sql = "sql",
-			ts = "typescript",
-			tsx = "typescript",
-		}
-
-		local function format()
-			local buf = vim.api.nvim_get_current_buf()
-			local name = vim.api.nvim_buf_get_name(buf)
-			local ext = name:match("%.(%w+)$")
-			local lang = ext_to_lang[ext]
-
-			if lang then
-				if lang == "javascript" or lang == "typescript" or lang == "css" then
-					vim.g.neoformat_try_node_exe = 1
-					vim.cmd("Neoformat prettier")
-					return
-				end
-
-				vim.cmd("Neoformat")
-				return
-			end
-		end
-
-		vim.keymap.set("n", "<leader>m", format, { desc = "Format buf with Neoformat or ls" })
+	"stevearc/conform.nvim",
+	event = { "BufWritePre" },
+	cmd = { "ConformInfo" },
+	keys = {
+		{
+			-- Customize or remove this keymap to your liking
+			"<leader>m",
+			function()
+				require("conform").format({ async = true })
+			end,
+			mode = "",
+			desc = "Format buffer",
+		},
+	},
+	-- This will provide type hinting with LuaLS
+	---@module "conform"
+	---@type conform.setupOpts
+	opts = {
+		log_level = vim.log.levels.DEBUG,
+		-- Define your formatters
+		formatters_by_ft = {
+			lua = { "stylua" },
+			python = { "isort", "black" },
+			javascript = { "prettier" },
+			typescript = { "prettier" },
+			sql = { "pg_format" },
+		},
+		-- Set default options
+		default_format_opts = {
+			lsp_format = "fallback",
+		},
+		-- Set up format-on-save
+		-- format_on_save = { timeout_ms = 500 },
+		-- Customize formatters
+		formatters = {
+			shfmt = {
+				append_args = { "-i", "2" },
+			},
+			pg_format = {
+				command = "pg_format",
+				-- Add any specific arguments here if needed
+				stdin = true,
+			},
+		},
+	},
+	init = function()
+		-- If you want the formatexpr, here is the place to set it
+		vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 	end,
 }

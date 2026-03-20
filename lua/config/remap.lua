@@ -15,10 +15,10 @@ vim.keymap.set("n", "N", "Nzzzv")
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 
-vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
@@ -33,17 +33,17 @@ vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 -- Debugger Mapping
-vim.keymap.set("n", "<leader>dt", ":DapUiToggle<CR>", { noremap=true })
-vim.keymap.set("n", "<leader>db", ":DapToggleBreakpoint<CR>", { noremap=true })
-vim.keymap.set("n", "<leader>dc", ":DapContinue<CR>", { noremap=true })
-vim.keymap.set("n", "<leader>dr", ":lua require('dapui').open({reset=true})<CR>", { noremap=true })
-vim.keymap.set("n", "<leader>dq", ":lua require('dapui').close({reset=true})<CR>", { noremap=true })
+vim.keymap.set("n", "<leader>dt", ":DapUiToggle<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>db", ":DapToggleBreakpoint<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>dc", ":DapContinue<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>dr", ":lua require('dapui').open({reset=true})<CR>", { noremap = true })
+vim.keymap.set("n", "<leader>dq", ":lua require('dapui').close({reset=true})<CR>", { noremap = true })
 
 -- Best remaps ever so no arrows
-vim.api.nvim_set_keymap('n', '<left>', [[:echo "STOP IT. USE 'h'"<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<up>', [[:echo "STOP IT. USE 'j'"<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<down>', [[:echo "STOP IT. USE 'k'"<CR>]], { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<right>', [[:echo "STOP IT. USE 'l'"<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<left>", [[:echo "STOP IT. USE 'h'"<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<up>", [[:echo "STOP IT. USE 'j'"<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<down>", [[:echo "STOP IT. USE 'k'"<CR>]], { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<right>", [[:echo "STOP IT. USE 'l'"<CR>]], { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<C-t>', "<cmd>vsp<CR> <C-w>w <cmd>terminal<CR> i", { noremap = true, silent = true })
-vim.api.nvim_set_keymap('t', '<Leader><ESC>', '<C-\\><C-n>', { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-t>", "<cmd>vsp<CR> <C-w>w <cmd>terminal<CR> i", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("t", "<Leader><ESC>", "<C-\\><C-n>", { noremap = true })

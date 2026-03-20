@@ -50,8 +50,10 @@ return {
 			ensure_installed = {
 				"eslint_d", -- js linter
 				"isort", -- python formatter
+				"pgformatter", -- sql postgress formatter
 				"prettier", -- prettier formatter
 				"pylint", -- python linter
+				"sql-formatter",
 				"stylua", -- lua formatter
 				"vacuum", -- openapi linter
 			},
