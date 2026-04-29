@@ -48,3 +48,8 @@ vim.g.rustfmt_autosave = 1
 vim.opt.shortmess:append("S")
 
 vim.opt.timeoutlen = 250
+
+-- For nvimdiff merge tool since that the primary
+-- usage of the diff tool for me I disable the line
+-- match default to match the entire conflict marker
+vim.opt.diffopt:remove("linematch:40")
