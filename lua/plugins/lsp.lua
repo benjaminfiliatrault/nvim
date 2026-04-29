@@ -146,14 +146,58 @@ return {
 		end)
 
 		vim.lsp.config("jsonls", {
+			enable = true,
 			settings = {
 				json = {
+					schemaStore = { enable = false }, -- Disable conflicting sources
 					schemas = require("schemastore").json.schemas(),
 					validate = { enable = true },
 				},
 			},
 		})
 
-		vim.lsp.enable("jsonls", true)
+		vim.lsp.config("yamlls", {
+			enable = true,
+			settings = {
+				yaml = {
+					schemas = require("schemastore").yaml.schemas(),
+					schemaStore = { enable = false }, -- Disable conflicting sources
+					customTags = {
+						"!And mapping",
+						"!And scalar",
+						"!And sequence",
+						"!Base64",
+						"!Cidr",
+						"!Equals",
+						"!Equals mapping", -- Include all types
+						"!Equals scalar",
+						"!Equals sequence",
+						"!FindInMap mapping",
+						"!FindInMap scalar",
+						"!FindInMap sequence",
+						"!GetAZs",
+						"!GetAtt",
+						"!GetAtt sequence",
+						"!If mapping",
+						"!If scalar",
+						"!If sequence",
+						"!ImportValue",
+						"!ImportValue sequence",
+						"!Join sequence",
+						"!Not",
+						"!Not mapping",
+						"!Not scalar",
+						"!Not sequence",
+						"!Or mapping",
+						"!Or scalar",
+						"!Or sequence",
+						"!Ref",
+						"!Select sequence",
+						"!Split sequence",
+						"!Sub",
+					},
+				},
+			},
+		})
 	end,
 }
