@@ -1,5 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
+	branch = "main",
 	event = { "BufReadPre", "BufNewFile" },
 	build = ":TSUpdate",
 	lazy = false,
@@ -12,83 +13,81 @@ return {
 		},
 	},
 	config = function()
+		-- treesitter-context setup (unchanged)
 		local context = require("treesitter-context")
 		context.setup({
-			enable = false, -- Enable this plugin (Can be enabled/disabled later via commands)
-			multiwindow = false, -- Enable multiwindow support.
-			max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
-			min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+			enable = false,
+			multiwindow = false,
+			max_lines = 0,
+			min_window_height = 0,
 			line_numbers = true,
-			multiline_threshold = 20, -- Maximum number of lines to show for a single context
-			trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-			mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
-			-- Separator between context and content. Should be a single character string, like '-'.
-			-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+			multiline_threshold = 20,
+			trim_scope = "outer",
+			mode = "cursor",
 			separator = nil,
-			zindex = 20, -- The Z-index of the context window
-			on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+			zindex = 20,
+			on_attach = nil,
 		})
 
-		local keymap = vim.keymap -- for conciseness
+		local keymap = vim.keymap
 		keymap.set("n", "tse", function()
 			context.toggle()
 		end)
 
-		-- import nvim-treesitter plugin
-		local treesitter = require("nvim-treesitter.configs")
-
-		-- configure treesitter
-		treesitter.setup({ -- enable syntax highlighting
-			modules = {},
-			auto_install = true,
-			ignore_install = {},
-			sync_install = false,
-			highlight = {
-				enable = true,
-				-- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-				-- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-				-- Using this option may slow down your editor, and you may see some duplicate highlights.
-				-- Instead of true it can also be a list of languages
-				additional_vim_regex_highlighting = false,
-			},
-			-- enable indentation
-			indent = { enable = false },
-			-- enable autotagging (w/ nvim-ts-autotag plugin)
-			autotag = { enable = false },
-			-- ensure these language parsers are installed
-			ensure_installed = {
-				"bash",
-				"c",
-				"css",
-				"dockerfile",
-				"gitignore",
-				"go",
-				"graphql",
-				"html",
-				"javascript",
-				"json",
-				"lua",
-				"markdown",
-				"markdown_inline",
-				"prisma",
-				"query",
-				"svelte",
-				"tsx",
-				"typescript",
-				"rust",
-				"vim",
-				"vimdoc",
-				"yaml",
-			},
-			incremental_selection = {
-				enable = true,
-				keymap = {
-					init_selection = "<C-s>",
-					node_incremental = "<C-s>",
-					scope_incremental = false,
-					node_decremental = "<bs>",
-				},
-			},
+		-- Install parsers (replaces ensure_installed)
+		require("nvim-treesitter").install({
+			"bash",
+			"c",
+			"css",
+			"dockerfile",
+			"gitignore",
+			"go",
+			"graphql",
+			"html",
+			"javascript",
+			"json",
+			"lua",
+			"markdown",
+			"markdown_inline",
+			"prisma",
+			"query",
+			"svelte",
+			"tsx",
+			"typescript",
+			"rust",
+			"vim",
+			"vimdoc",
+			"yaml",
 		})
+
+		-- Enable highlighting + indentation via FileType autocmd
+		-- (replaces highlight.enable and indent.enable)
+		vim.api.nvim_create_autocmd("FileType", {
+			callback = function()
+				pcall(vim.treesitter.start)
+				-- uncomment below if you want treesitter indentation back
+				-- vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+			end,
+		})
+
+		-- Autotag setup (now handled directly by the plugin, not via ts configs)
+		require("nvim-ts-autotag").setup()
+
+		-- Incremental selection (still works via built-in nvim 0.12 treesitter)
+		vim.keymap.set("n", "<C-s>", function()
+			vim.cmd("normal! v")
+			vim.cmd("lua vim.treesitter.node_selection.select()")
+		end)
+
+		-- Native incremental selection keymaps
+		vim.keymap.set({ "n", "x" }, "<C-s>", function()
+			require("nvim-treesitter.incremental_selection").init_selection()
+		end)
+		vim.keymap.set("x", "<C-s>", function()
+			require("nvim-treesitter.incremental_selection").node_incremental()
+		end)
+		vim.keymap.set("x", "<bs>", function()
+			require("nvim-treesitter.incremental_selection").node_decremental()
+		end)
 	end,
 }

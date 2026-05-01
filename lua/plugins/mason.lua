@@ -54,6 +54,7 @@ return {
 				"prettier", -- prettier formatter
 				"pylint", -- python linter
 				"sql-formatter",
+        "tree-sitter-cli",
 				"stylua", -- lua formatter
 				"vacuum", -- openapi linter
 			},
