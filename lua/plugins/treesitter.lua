@@ -34,8 +34,9 @@ return {
 			context.toggle()
 		end)
 
+		local treesitter = require("nvim-treesitter")
 		-- Install parsers (replaces ensure_installed)
-		require("nvim-treesitter").install({
+		treesitter.install({
 			"bash",
 			"c",
 			"css",
@@ -72,22 +73,5 @@ return {
 
 		-- Autotag setup (now handled directly by the plugin, not via ts configs)
 		require("nvim-ts-autotag").setup()
-
-		-- Incremental selection (still works via built-in nvim 0.12 treesitter)
-		vim.keymap.set("n", "<C-s>", function()
-			vim.cmd("normal! v")
-			vim.cmd("lua vim.treesitter.node_selection.select()")
-		end)
-
-		-- Native incremental selection keymaps
-		vim.keymap.set({ "n", "x" }, "<C-s>", function()
-			require("nvim-treesitter.incremental_selection").init_selection()
-		end)
-		vim.keymap.set("x", "<C-s>", function()
-			require("nvim-treesitter.incremental_selection").node_incremental()
-		end)
-		vim.keymap.set("x", "<bs>", function()
-			require("nvim-treesitter.incremental_selection").node_decremental()
-		end)
 	end,
 }

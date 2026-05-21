@@ -105,9 +105,6 @@ return {
 				keymap.set("n", "nd", function()
 					jumpWithVirtLineDiags(1)
 				end, { desc = "󰒕 Next diagnostic" })
-
-				opts.desc = "Restart LSP"
-				keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
 			end,
 		})
 

@@ -12,7 +12,7 @@ return {
 			-- provider = _99.ClaudeCodeProvider,  -- default: OpenCodeProvider
 			provider = _99.Providers.OpenCodeProvider,
 			-- model is optional, overrides the provider's default
-			model = "openai/gpt-5.1-codex",
+			model = "openai/gpt-5.5",
 			logger = {
 				level = _99.DEBUG,
 				path = "/tmp/" .. basename .. ".99.debug",
