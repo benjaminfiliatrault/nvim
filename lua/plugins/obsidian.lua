@@ -24,8 +24,31 @@ return {
 			config = function()
 				require("autolist").setup()
 
-				vim.keymap.set("i", "<tab>", "<cmd>AutolistTab<cr>")
-				vim.keymap.set("i", "<s-tab>", "<cmd>AutolistShiftTab<cr>")
+				-- AutolistTab falls back to normal! a<Tab> on non-list lines, which breaks visual-block insert.
+				local function autolist_indent_key(indent)
+					local line = vim.api.nvim_get_current_line()
+					local lists = require("autolist.config").lists[vim.bo.filetype]
+					local is_list = require("autolist.utils").is_list(line, lists)
+					local cursor_at_eol = vim.fn.getpos(".")[3] - 1 == string.len(line)
+
+					if is_list and cursor_at_eol then
+						if indent then
+							return "<C-t><cmd>AutolistRecalculate<cr>"
+						end
+
+						return "<C-d><cmd>AutolistRecalculate<cr>"
+					end
+
+					return indent and "<tab>" or "<s-tab>"
+				end
+
+				vim.keymap.set("i", "<tab>", function()
+					return autolist_indent_key(true)
+				end, { expr = true, replace_keycodes = true })
+				vim.keymap.set("i", "<s-tab>", function()
+					return autolist_indent_key(false)
+				end, { expr = true, replace_keycodes = true })
+
 				-- vim.keymap.set("i", "<c-t>", "<c-t><cmd>AutolistRecalculate<cr>") -- an example of using <c-t> to indent
 				vim.keymap.set("i", "<CR>", "<CR><cmd>AutolistNewBullet<cr>")
 				vim.keymap.set("n", "o", "o<cmd>AutolistNewBullet<cr>")
