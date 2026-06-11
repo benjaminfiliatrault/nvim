@@ -29,6 +29,12 @@ return {
 				},
 			},
 			pickers = {
+				grep_string = {
+					hidden = true,
+				},
+				live_grep = {
+					hidden = true,
+				},
 				find_files = {
 					hidden = true,
 				},
