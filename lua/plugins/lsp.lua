@@ -1,8 +1,8 @@
 return {
 	"neovim/nvim-lspconfig",
+	lazy = false,
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
-		"hrsh7th/cmp-nvim-lsp",
 		"b0o/schemastore.nvim",
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 		{
@@ -27,6 +27,106 @@ return {
 		},
 	},
 	config = function()
+		local lsps = {
+			{ "rust_analyzer" },
+			{ "cssls" },
+			{ "emmet_ls" },
+			{ "gopls" },
+			{ "graphql" },
+			{ "helm_ls" },
+			{ "html" },
+			{
+				"jsonls",
+				{
+					enable = true,
+					settings = {
+						json = {
+							schemaStore = { enable = false }, -- Disable conflicting sources
+							schemas = require("schemastore").json.schemas(),
+							validate = { enable = true },
+						},
+					},
+				},
+			},
+			{
+				"lua_ls",
+				{
+					settings = {
+						Lua = {
+							diagnostics = {
+								globals = { "vim" },
+							},
+							completion = {
+								callSnippet = "Replace",
+							},
+						},
+					},
+				},
+			},
+			{ "marksman" },
+			{ "phpactor" },
+			{ "prismals" },
+			{ "pyright" },
+			{ "stylua" },
+			{ "svelte" },
+			{ "tailwindcss" },
+			{ "taplo" },
+			{ "ts_ls" },
+			{
+				"yamlls",
+				{
+					enable = true,
+					settings = {
+						yaml = {
+							schemas = require("schemastore").yaml.schemas(),
+							schemaStore = { enable = false }, -- Disable conflicting sources
+							customTags = {
+								"!And mapping",
+								"!And scalar",
+								"!And sequence",
+								"!Base64",
+								"!Cidr",
+								"!Equals",
+								"!Equals mapping", -- Include all types
+								"!Equals scalar",
+								"!Equals sequence",
+								"!FindInMap mapping",
+								"!FindInMap scalar",
+								"!FindInMap sequence",
+								"!GetAZs",
+								"!GetAtt",
+								"!GetAtt sequence",
+								"!If mapping",
+								"!If scalar",
+								"!If sequence",
+								"!ImportValue",
+								"!ImportValue sequence",
+								"!Join sequence",
+								"!Not",
+								"!Not mapping",
+								"!Not scalar",
+								"!Not sequence",
+								"!Or mapping",
+								"!Or scalar",
+								"!Or sequence",
+								"!Ref",
+								"!Select sequence",
+								"!Split sequence",
+								"!Sub",
+							},
+						},
+					},
+				},
+			},
+		}
+
+		for _, value in pairs(lsps) do
+			if value[2] then
+				vim.lsp.config(value[1], value[2])
+				vim.lsp.enable(value[1], true)
+			end
+		end
+
 		-- import lspconfig plugin
 		local keymap = vim.keymap -- for conciseness
 
@@ -108,21 +208,6 @@ return {
 			end,
 		})
 
-		vim.lsp.config("lua_ls", {
-			settings = {
-				Lua = {
-					diagnostics = {
-						globals = { "vim" },
-					},
-					completion = {
-						callSnippet = "Replace",
-					},
-				},
-			},
-		})
-
-		vim.lsp.enable("lua_ls", true)
-
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		vim.diagnostic.config({
 			virtual_text = false,
@@ -141,60 +226,5 @@ return {
 		vim.lsp.buf_request(0, "textDocument/definition", nil, function(error, _)
 			print(vim.inspect(error))
 		end)
-
-		vim.lsp.config("jsonls", {
-			enable = true,
-			settings = {
-				json = {
-					schemaStore = { enable = false }, -- Disable conflicting sources
-					schemas = require("schemastore").json.schemas(),
-					validate = { enable = true },
-				},
-			},
-		})
-
-		vim.lsp.config("yamlls", {
-			enable = true,
-			settings = {
-				yaml = {
-					schemas = require("schemastore").yaml.schemas(),
-					schemaStore = { enable = false }, -- Disable conflicting sources
-					customTags = {
-						"!And mapping",
-						"!And scalar",
-						"!And sequence",
-						"!Base64",
-						"!Cidr",
-						"!Equals",
-						"!Equals mapping", -- Include all types
-						"!Equals scalar",
-						"!Equals sequence",
-						"!FindInMap mapping",
-						"!FindInMap scalar",
-						"!FindInMap sequence",
-						"!GetAZs",
-						"!GetAtt",
-						"!GetAtt sequence",
-						"!If mapping",
-						"!If scalar",
-						"!If sequence",
-						"!ImportValue",
-						"!ImportValue sequence",
-						"!Join sequence",
-						"!Not",
-						"!Not mapping",
-						"!Not scalar",
-						"!Not sequence",
-						"!Or mapping",
-						"!Or scalar",
-						"!Or sequence",
-						"!Ref",
-						"!Select sequence",
-						"!Split sequence",
-						"!Sub",
-					},
-				},
-			},
-		})
 	end,
 }
