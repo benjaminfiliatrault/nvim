@@ -25,6 +25,7 @@ return {
 			javascript = { "prettier" },
 			typescript = { "prettier" },
 			sql = { "pg_format" },
+			markdown = { "prettierd", "prettier", stop_after_first = true },
 		},
 		-- Set default options
 		default_format_opts = {

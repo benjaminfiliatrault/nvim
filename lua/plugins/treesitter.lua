@@ -38,7 +38,6 @@ return {
 		-- Install parsers (replaces ensure_installed)
 		treesitter.install({
 			"bash",
-			"c",
 			"css",
 			"dockerfile",
 			"gitignore",
@@ -51,8 +50,6 @@ return {
 			"markdown",
 			"markdown_inline",
 			"prisma",
-			"query",
-			"svelte",
 			"tsx",
 			"typescript",
 			"rust",
