@@ -23,7 +23,7 @@ return {
 			},
 			context_window = 2048,
 			debounce_ms = 300,
-			accept_keymap = "<M-l>",
+			accept_keymap = "<C-y>",
 			dismiss_keymap = "<M-e>",
 		},
 	},
